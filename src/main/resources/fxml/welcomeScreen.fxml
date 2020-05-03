@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" prefHeight="58.0" prefWidth="604.0" text="Welcome to Entertainment Lib!" textFill="#ff1a72" />
+      <Label alignment="CENTER" prefHeight="165.0" prefWidth="610.0" text="This app will help you manage your books, movies and games.">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>
