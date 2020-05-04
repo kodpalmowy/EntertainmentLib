@@ -1,8 +1,9 @@
 module com.kodpalmowy {
     requires javafx.controls;
     requires javafx.fxml;
+    requires mysql.connector.java;
+    requires java.sql;
 
-    opens fxml to javafx.fxml;
     opens com.kodpalmowy.controllers to javafx.fxml;
     exports com.kodpalmowy.controllers;
     exports com.kodpalmowy to javafx.graphics;
