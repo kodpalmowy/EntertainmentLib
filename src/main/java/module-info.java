@@ -7,4 +7,5 @@ module com.kodpalmowy {
     opens com.kodpalmowy.controllers to javafx.fxml;
     exports com.kodpalmowy.controllers;
     exports com.kodpalmowy to javafx.graphics;
+    exports com.kodpalmowy.models;
 }

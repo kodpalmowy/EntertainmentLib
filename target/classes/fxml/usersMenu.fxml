@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <ToggleButton mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" text="%listUsersButton">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" text="%addUserButton">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ToggleButton>
+         </children>
+      </HBox>
+      <HBox prefHeight="500.0" prefWidth="1000.0" />
+   </children>
+</VBox>

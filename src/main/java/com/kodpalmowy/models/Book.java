@@ -4,29 +4,24 @@ import java.util.Date;
 
 public class Book {
 
-    private int usersID;
-    private int ISBN;
     private String title;
     private String author;
+    private String genre;
     private String description;
-    private String category;
+    private String ISBN;
+    private String publisher;
     private int rating;
     private Date readDate;
 
-    public int getUsersID() {
-        return usersID;
-    }
-
-    public void setUsersID(int usersID) {
-        this.usersID = usersID;
-    }
-
-    public int getISBN() {
-        return ISBN;
-    }
-
-    public void setISBN(int ISBN) {
+    public Book(String title, String author, String genre, String description, String ISBN, String publisher, int rating, Date readDate) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.description = description;
         this.ISBN = ISBN;
+        this.publisher = publisher;
+        this.rating = rating;
+        this.readDate = readDate;
     }
 
     public String getTitle() {
@@ -45,6 +40,14 @@ public class Book {
         this.author = author;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -53,12 +56,20 @@ public class Book {
         this.description = description;
     }
 
-    public String getCategory() {
-        return category;
+    public String getISBN() {
+        return ISBN;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
     public int getRating() {
