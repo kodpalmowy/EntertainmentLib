@@ -1,20 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox prefHeight="271.0" prefWidth="1200.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kodpalmowy.controllers.BookLibController">
+   <top>
+      <HBox prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="267.0" prefWidth="248.0" text="Button" />
-            <Button mnemonicParsing="false" prefHeight="267.0" prefWidth="248.0" text="Button" />
-            <Button mnemonicParsing="false" prefHeight="267.0" prefWidth="248.0" text="Button" />
-            <Button mnemonicParsing="false" prefHeight="267.0" prefWidth="248.0" text="Button" />
+            <Button mnemonicParsing="false" onAction="#addBook" prefHeight="70.0" prefWidth="150.0" text="%addBookButton">
+               <HBox.margin>
+                  <Insets left="25.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#searchBook" prefHeight="70.0" prefWidth="150.0" text="%searchBook">
+               <HBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#editBook" prefHeight="70.0" prefWidth="150.0" text="%editBook">
+               <HBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#deleteBook" prefHeight="70.0" prefWidth="150.0" text="%deleteBook">
+               <HBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#filterBooks" prefHeight="70.0" prefWidth="150.0" text="%filterBook">
+               <HBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
          </children>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
       </HBox>
-      <HBox prefHeight="590.0" prefWidth="1200.0" />
-   </children>
-</VBox>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="bookTable" layoutX="14.0" layoutY="14.0" prefHeight="490.0" prefWidth="950.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+              <columns>
+                <TableColumn fx:id="col_bookTitle" minWidth="150.0" prefWidth="150.0" text="%bookTitle" />
+                  <TableColumn fx:id="col_bookAuthor" minWidth="120.0" prefWidth="120.0" text="%bookAuthor" />
+                  <TableColumn fx:id="col_bookGenre" minWidth="120.0" prefWidth="120.0" text="%bookGenre" />
+                  <TableColumn fx:id="col_bookDescription" minWidth="190.0" prefWidth="190.0" text="%bookDescription" />
+                <TableColumn fx:id="col_bookISBN" minWidth="100.0" prefWidth="100.0" text="ISBN" />
+                  <TableColumn fx:id="col_bookPublisher" minWidth="120.0" prefWidth="120.0" text="%bookPublisher" />
+                  <TableColumn fx:id="col_bookRating" minWidth="70.0" prefWidth="70.0" text="%bookRating" />
+                  <TableColumn fx:id="col_bookReadDate" minWidth="80.0" text="%bookReadDate" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

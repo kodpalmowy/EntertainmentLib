@@ -1,4 +1,4 @@
-package com.kodpalmowy.conecctivity;
+package com.kodpalmowy.connectionUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,14 +11,14 @@ public class ConnectionClass {
     private static final String userPassword = "kodpalmowy";
     static Connection connection;
 
-    @SuppressWarnings("finally")
-    public static Connection getConnection(){
+
+    public static Connection getConnection() {
         try {
             connection = DriverManager.getConnection(dbName, userName, userPassword);
-        } catch (SQLException sqle){
+        } catch (SQLException sqle) {
             System.out.println("SQLException error : " + sqle.getMessage());
-        } finally {
-            return connection;
         }
+        return connection;
+
     }
 }
