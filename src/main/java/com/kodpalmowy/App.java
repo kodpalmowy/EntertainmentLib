@@ -1,5 +1,6 @@
 package com.kodpalmowy;
 
+import com.kodpalmowy.database.utils.ConnectionClass;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +28,7 @@ public class App extends Application {
         scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
+        ConnectionClass.initializeDB();
     }
 
     public static void main(String[] args) {
