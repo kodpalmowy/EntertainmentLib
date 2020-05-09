@@ -8,4 +8,7 @@ module com.kodpalmowy {
     exports com.kodpalmowy.controllers;
     exports com.kodpalmowy to javafx.graphics;
     exports com.kodpalmowy.models;
+//    exports com.kodpalmowy.database.dao;
+    exports com.kodpalmowy.database.utils;
+//    exports com.kodpalmowy.database.models;
 }

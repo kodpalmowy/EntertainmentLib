@@ -11,13 +11,13 @@ import java.util.ResourceBundle;
 public class MainBorderPaneController {
 
     @FXML
-    private MainMenuController mainMenuController;
+    private MenuButtonsController menuButtonsController;
     @FXML
     private BorderPane mainBorderPane;
 
     @FXML
     private void initialize(){
-        mainMenuController.setMainBorderPaneController(this);
+        menuButtonsController.setMainBorderPaneController(this);
     }
 
     public void setCenter(String fxml){

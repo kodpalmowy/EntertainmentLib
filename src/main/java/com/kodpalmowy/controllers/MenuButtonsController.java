@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleGroup;
 
-public class MainMenuController {
+public class MenuButtonsController {
 
     private final String USERS_LIB_FXML = "/fxml/usersMenu.fxml";
     private final String BOOKS_LIB_FXML = "/fxml/bookLib.fxml";

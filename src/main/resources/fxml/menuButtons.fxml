@@ -6,7 +6,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="vbox" stylesheets="@../css/mainMenu_stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kodpalmowy.controllers.MainMenuController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="vbox" stylesheets="@../css/mainMenu_stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kodpalmowy.controllers.MenuButtonsController">
    <children>
       <ToggleButton mnemonicParsing="false" onAction="#openUsers" prefHeight="90.0" prefWidth="120.0" styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css" text="%usersButton">
          <toggleGroup>

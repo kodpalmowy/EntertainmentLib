@@ -1,16 +1,13 @@
 package com.kodpalmowy.controllers;
 
-import com.kodpalmowy.connectionUtils.ConnectionClass;
+import com.kodpalmowy.database.utils.ConnectionClass;
 import com.kodpalmowy.models.Book;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
@@ -20,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class BookLibController implements Initializable {
@@ -43,9 +42,17 @@ public class BookLibController implements Initializable {
     @FXML
     public TableColumn<Book, Date> col_bookReadDate;
 
+    ObservableList<String> bookGenres = FXCollections.observableArrayList("Drama","Fairytale","Poetry","Satire","Review","Religion","Autobiography","Diary",
+            "True Crime","Fantasy","Adventure","Romance","Contemporary","Dystopian","Mystery",
+            "Horror","Thriller","Paranormal","Historical fiction", "Science fiction","Memoir",
+            "Cooking","Art","Self-help","Development","Motivational","Health","History","Travel",
+            "Guide","Humor","Children").sorted();
+    ObservableList<Integer> bookRatings = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10);
+
     ObservableList<Book> booksList = FXCollections.observableArrayList();
     private Connection connection;
     private ResultSet resultSet;
+
 
     public BookLibController() {
         connection = ConnectionClass.getConnection();
@@ -53,15 +60,18 @@ public class BookLibController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         try {
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM bookList");
             while (resultSet.next()){
-                booksList.add(new Book(resultSet.getString("title"),resultSet.getString("author"),
-                                       resultSet.getString("genre"),resultSet.getString("description"),
-                                       resultSet.getString("ISBN"),resultSet.getString("publisher"),
-                                       resultSet.getInt("rating"),resultSet.getDate("ReadDate")));
+                booksList.add(new Book(resultSet.getString("title"),
+                                       resultSet.getString("author"),
+                                       resultSet.getString("genre"),
+                                       resultSet.getString("description"),
+                                       resultSet.getString("ISBN"),
+                                       resultSet.getString("publisher"),
+                                       resultSet.getInt("rating"),
+                                       resultSet.getDate("ReadDate")));
             }
 
         } catch (SQLException e){
@@ -82,12 +92,24 @@ public class BookLibController implements Initializable {
 
     public void addBook() {
         try {
-            Dialog<Button> dialog = new Dialog<>();
-            FXMLLoader loader = FXMLLoader.load(getClass().getResource("/fxml/addBookDialog.fxml"));
-            dialog.getDialogPane().setContent(loader.load());
-            dialog.show();
-        } catch (IOException ioe){
-            System.out.println("IOException : " + ioe.getMessage());
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/addBookDialog.fxml"));
+            DialogPane addBookDialog = loader.load();
+            BookController bookController = loader.getController();
+            bookController.genrePick.setItems(bookGenres);
+            bookController.ratingPick.setItems(bookRatings);
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(addBookDialog);
+            dialog.setTitle("Add book");
+
+            Optional<ButtonType> result = dialog.showAndWait();
+            if (result.get() == ButtonType.OK){
+                Book book = bookController.processResult();
+                booksList.add(book);
+            }
+        } catch (IOException | NoSuchElementException ioe){
+            System.out.println("Exception : " + ioe.getMessage());
+            ioe.printStackTrace();
         }
 
     }

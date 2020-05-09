@@ -7,7 +7,7 @@
 <BorderPane fx:id="mainBorderPane" prefHeight="800.0" prefWidth="1200.0" styleClass="borderPane" stylesheets="@../css/mainBorderPane_stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kodpalmowy.controllers.MainBorderPaneController">
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-          <fx:include fx:id="mainMenu" source="mainMenu.fxml" />
+          <fx:include fx:id="mainMenu" source="menuButtons.fxml" />
       </VBox>
    </left>
    <center>
