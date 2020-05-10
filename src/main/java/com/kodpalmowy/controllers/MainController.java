@@ -8,16 +8,15 @@ import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-public class MainBorderPaneController {
+public class MainController {
 
-    @FXML
     private MenuButtonsController menuButtonsController;
     @FXML
     private BorderPane mainBorderPane;
 
     @FXML
     private void initialize(){
-        menuButtonsController.setMainBorderPaneController(this);
+        menuButtonsController.setMainController(this);
     }
 
     public void setCenter(String fxml){
@@ -31,5 +30,4 @@ public class MainBorderPaneController {
         }
         mainBorderPane.setCenter(parent);
     }
-
 }

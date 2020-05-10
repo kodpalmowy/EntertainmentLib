@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-
 import java.sql.Date;
 
 public class BookController {
@@ -25,18 +24,6 @@ public class BookController {
     public ComboBox<Integer> ratingPick;
     @FXML
     public DatePicker datePick;
-
-//    ObservableList<String> bookGenres = FXCollections.observableArrayList("Drama","Fairytale","Poetry","Satire","Review","Religion","Autobiography","Diary",
-//            "True Crime","Fantasy","Adventure","Romance","Contemporary","Dystopian","Mystery",
-//            "Horror","Thriller","Paranormal","Historical fiction", "Science fiction","Memoir",
-//            "Cooking","Art","Self-help","Development","Motivational","Health","History","Travel",
-//            "Guide","Humor","Children");
-//    ObservableList<Integer> bookRatings = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10);
-//
-//    public BookController() {
-//        genrePick.setItems(bookGenres);
-//        ratingPick.setItems(bookRatings);
-//    }
 
     public Book processResult(){
         String title = titleArea.getText().trim();

@@ -14,31 +14,31 @@ public class MenuButtonsController {
     @FXML
     private ToggleGroup menuToggleGroup;
 
-    private MainBorderPaneController mainBorderPaneController;
+    private MainController mainController;
 
     @FXML
     public void openUsers() {
-        mainBorderPaneController.setCenter(USERS_LIB_FXML);
+        mainController.setCenter(USERS_LIB_FXML);
     }
 
     @FXML
     public void openBookLib() {
-        mainBorderPaneController.setCenter(BOOKS_LIB_FXML);
+        mainController.setCenter(BOOKS_LIB_FXML);
     }
 
     @FXML
     public void openMovieLib() {
-        mainBorderPaneController.setCenter(MOVIES_LIB_FXML);
+        mainController.setCenter(MOVIES_LIB_FXML);
     }
 
     @FXML
     public void openGameLib() {
-        mainBorderPaneController.setCenter(GAMES_LIB_FXML);
+        mainController.setCenter(GAMES_LIB_FXML);
     }
 
     @FXML
     public void openOptions() {
-        mainBorderPaneController.setCenter(OPTIONS_LIB_FXML);
+        mainController.setCenter(OPTIONS_LIB_FXML);
     }
 
     @FXML
@@ -49,9 +49,7 @@ public class MenuButtonsController {
         Platform.exit();
     }
 
-    public void setMainBorderPaneController(MainBorderPaneController mainBorderPaneController) {
-        this.mainBorderPaneController = mainBorderPaneController;
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
-
-
 }

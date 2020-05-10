@@ -1,5 +1,10 @@
-/Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/controllers/MainBorderPaneController.java
+/Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/controllers/MainController.java
+/Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/controllers/BookController.java
+/Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/database/utils/Helper.java
 /Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/App.java
+/Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/database/utils/ConnectionClass.java
 /Users/radek/IdeaProjects/EntertainmentLib/src/main/java/module-info.java
-/Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/controllers/MainMenuController.java
+/Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/models/Book.java
 /Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/controllers/BookLibController.java
+/Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/controllers/MenuButtonsController.java
+/Users/radek/IdeaProjects/EntertainmentLib/src/main/java/com/kodpalmowy/models/User.java

@@ -14,25 +14,23 @@ import java.util.ResourceBundle;
 /**
  * JavaFX App
  */
-public class App extends Application {
-
-    private static Scene scene;
+public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
         Locale.setDefault(new Locale("en"));
         ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles.language");
-        stage.setTitle(resourceBundle.getString("title.app"));
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/mainBorderPane.fxml"),resourceBundle);
         Parent parent = fxmlLoader.load();
-        scene = new Scene(parent);
+        Scene scene = new Scene(parent);
         stage.setScene(scene);
+        stage.setTitle(resourceBundle.getString("title.app"));
         stage.show();
+
         ConnectionClass.initializeDB();
     }
 
     public static void main(String[] args) {
         launch();
     }
-
 }

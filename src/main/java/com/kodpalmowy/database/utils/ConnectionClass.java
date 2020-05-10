@@ -33,6 +33,7 @@ public class ConnectionClass {
             if (!tablesInDB.next()) {
                 Helper.createTable();
             }
+            tablesInDB.close();
         } catch (SQLException slqe) {
             System.out.println("SQLException : " + slqe.getMessage());
             // Later change this to logger

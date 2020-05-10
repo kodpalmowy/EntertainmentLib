@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -42,14 +41,14 @@ public class BookLibController implements Initializable {
     @FXML
     public TableColumn<Book, Date> col_bookReadDate;
 
-    ObservableList<String> bookGenres = FXCollections.observableArrayList("Drama","Fairytale","Poetry","Satire","Review","Religion","Autobiography","Diary",
+    private ObservableList<String> bookGenres = FXCollections.observableArrayList("Drama","Fairytale","Poetry","Satire","Review","Religion","Autobiography","Diary",
             "True Crime","Fantasy","Adventure","Romance","Contemporary","Dystopian","Mystery",
             "Horror","Thriller","Paranormal","Historical fiction", "Science fiction","Memoir",
             "Cooking","Art","Self-help","Development","Motivational","Health","History","Travel",
             "Guide","Humor","Children").sorted();
-    ObservableList<Integer> bookRatings = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10);
+    private ObservableList<Integer> bookRatings = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10);
 
-    ObservableList<Book> booksList = FXCollections.observableArrayList();
+    private ObservableList<Book> booksList = FXCollections.observableArrayList();
     private Connection connection;
     private ResultSet resultSet;
 
