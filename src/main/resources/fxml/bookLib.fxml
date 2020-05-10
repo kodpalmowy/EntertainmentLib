@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kodpalmowy.controllers.BookLibController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kodpalmowy.controllers.BookLibController">
    <top>
       <HBox prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -54,7 +53,7 @@
                   <TableColumn fx:id="col_bookGenre" minWidth="120.0" prefWidth="120.0" text="%bookGenre" />
                   <TableColumn fx:id="col_bookDescription" minWidth="190.0" prefWidth="190.0" text="%bookDescription" />
                 <TableColumn fx:id="col_bookISBN" minWidth="100.0" prefWidth="100.0" text="ISBN" />
-                  <TableColumn fx:id="col_bookPublisher" minWidth="120.0" prefWidth="120.0" text="%bookPublisher" />
+                  <TableColumn fx:id="col_bookPublisher" minWidth="115.0" prefWidth="115.0" text="%bookPublisher" />
                   <TableColumn fx:id="col_bookRating" minWidth="70.0" prefWidth="70.0" text="%bookRating" />
                   <TableColumn fx:id="col_bookReadDate" minWidth="80.0" text="%bookReadDate" />
               </columns>

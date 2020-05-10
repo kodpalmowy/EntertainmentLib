@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class MainController {
-
+    @FXML
     private MenuButtonsController menuButtonsController;
     @FXML
     private BorderPane mainBorderPane;

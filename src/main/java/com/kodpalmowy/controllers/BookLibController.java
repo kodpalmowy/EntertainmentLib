@@ -1,6 +1,7 @@
 package com.kodpalmowy.controllers;
 
 import com.kodpalmowy.database.utils.ConnectionClass;
+import com.kodpalmowy.database.utils.Helper;
 import com.kodpalmowy.models.Book;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,18 +51,17 @@ public class BookLibController implements Initializable {
 
     private ObservableList<Book> booksList = FXCollections.observableArrayList();
     private Connection connection;
-    private ResultSet resultSet;
 
 
     public BookLibController() {
-        connection = ConnectionClass.getConnection();
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            Statement statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM bookList");
+        try (Connection connection = ConnectionClass.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM bookList")){
             while (resultSet.next()){
                 booksList.add(new Book(resultSet.getString("title"),
                                        resultSet.getString("author"),
@@ -71,10 +71,11 @@ public class BookLibController implements Initializable {
                                        resultSet.getString("publisher"),
                                        resultSet.getInt("rating"),
                                        resultSet.getDate("ReadDate")));
-            }
 
+            }
         } catch (SQLException e){
             System.out.println("SQLException : " + e.getMessage());
+            e.printStackTrace();
         }
 
         col_bookTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -105,6 +106,7 @@ public class BookLibController implements Initializable {
             if (result.get() == ButtonType.OK){
                 Book book = bookController.processResult();
                 booksList.add(book);
+                Helper.insertBook(book);
             }
         } catch (IOException | NoSuchElementException ioe){
             System.out.println("Exception : " + ioe.getMessage());

@@ -12,7 +12,7 @@ public class ConnectionClass {
     public static void initializeDB() {
         createConnection();
         createTable();
-        closeConnection();
+        
     }
 
     private static void closeConnection() {

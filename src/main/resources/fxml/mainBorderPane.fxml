@@ -9,7 +9,7 @@
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kodpalmowy.controllers.MainController">
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-          <fx:include fx:id="mainMenu" source="menuButtons.fxml" />
+          <fx:include fx:id="menuButtons" source="menuButtons.fxml" />
       </VBox>
    </left>
    <center>

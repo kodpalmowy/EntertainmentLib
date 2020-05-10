@@ -13,7 +13,7 @@ public class MenuButtonsController {
     private final String OPTIONS_LIB_FXML = "/fxml/options.fxml";
     @FXML
     private ToggleGroup menuToggleGroup;
-
+    @FXML
     private MainController mainController;
 
     @FXML
