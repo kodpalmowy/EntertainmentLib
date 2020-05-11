@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Book {
 
+    private int _id;
     private String title;
     private String author;
     private String genre;
@@ -22,6 +23,14 @@ public class Book {
         this.publisher = publisher;
         this.rating = rating;
         this.readDate = readDate;
+    }
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
     }
 
     public String getTitle() {

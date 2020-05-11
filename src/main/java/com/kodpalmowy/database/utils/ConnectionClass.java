@@ -12,7 +12,7 @@ public class ConnectionClass {
     public static void initializeDB() {
         createConnection();
         createTable();
-        
+        closeConnection();
     }
 
     private static void closeConnection() {
@@ -20,7 +20,7 @@ public class ConnectionClass {
             try {
                 connection.close();
             } catch (SQLException sqle) {
-                System.out.println("SQLException : " + sqle.getMessage());
+                System.out.println("SQLException (CLOSE CONNECTION) : " + sqle.getMessage());
                 // Later change this to logger
             }
         }
@@ -31,11 +31,11 @@ public class ConnectionClass {
             DatabaseMetaData metaData = connection.getMetaData();
             ResultSet tablesInDB = metaData.getTables(null, null, "bookList", null);
             if (!tablesInDB.next()) {
-                Helper.createTable();
+                SQLQueries.createTable();
             }
             tablesInDB.close();
         } catch (SQLException slqe) {
-            System.out.println("SQLException : " + slqe.getMessage());
+            System.out.println("SQLException (CREATE TABLE) : " + slqe.getMessage());
             // Later change this to logger
         }
     }
@@ -44,14 +44,19 @@ public class ConnectionClass {
         try {
             connection = DriverManager.getConnection(dbName, userName, userPassword);
         } catch (SQLException sqle) {
-            System.out.println("SQLException error : " + sqle.getMessage());
+            System.out.println("SQLException error (CREATE CONNECTION) : " + sqle.getMessage());
         }
     }
 
     public static Connection getConnection() {
-        if (connection == null) {
-            createConnection();
+        try {
+            if (connection == null || connection.isClosed()) {
+                createConnection();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            return connection;
         }
-        return connection;
     }
 }

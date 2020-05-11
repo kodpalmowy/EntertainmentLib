@@ -4,14 +4,14 @@ import com.kodpalmowy.models.Book;
 
 import java.sql.*;
 
-public class Helper {
+public class SQLQueries {
 
-    public Helper() {
+    public SQLQueries() {
     }
 
     public static void createTable() {
-        String SQL_CREATE_TABLE_QUERY = "CREATE TABLE bookList (_id INT NOT NULL AUTO_INCREMENT, title VARCHAR(50) NOT NULL, author VARCHAR(50) NOT NULL, genre VARCHAR(50), description VARCHAR(200), " +
-                "ISBN VARCHAR(20), publisher VARCHAR(50), rating INT(10), readDate DATETIME, PRIMARY KEY (_id)";
+        String SQL_CREATE_TABLE_QUERY = "CREATE TABLE bookList (_ID INT NOT NULL AUTO_INCREMENT, title VARCHAR(100) NOT NULL, author VARCHAR(100) NOT NULL, genre VARCHAR(50), description VARCHAR(300), " +
+                "ISBN VARCHAR(25), publisher VARCHAR(100), rating INT(10), readDate DATETIME, PRIMARY KEY (_id)";
         try (Connection connection = ConnectionClass.getConnection();
              Statement statement = connection.createStatement()) {
              statement.executeQuery(SQL_CREATE_TABLE_QUERY);
@@ -33,10 +33,15 @@ public class Helper {
             preparedStatement.setString(6,book.getPublisher());
             preparedStatement.setInt(7,book.getRating());
             preparedStatement.setDate(8, (Date) book.getReadDate());
-            preparedStatement.executeQuery();
+            preparedStatement.execute();
         } catch (SQLException sqle) {
              System.out.println("SQLException(INSERT) : " + sqle.getMessage());
             // Later change this to logger
         }
+    }
+
+    public static void deleteBook(Book book){
+        String SQL_DELETE_QUERY= "";
+        // to be done... later...
     }
 }

@@ -1,30 +1,30 @@
 package com.kodpalmowy.controllers;
 
 import com.kodpalmowy.database.utils.ConnectionClass;
-import com.kodpalmowy.database.utils.Helper;
 import com.kodpalmowy.models.Book;
+import com.kodpalmowy.utils.DialogUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import java.io.IOException;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class BookLibController implements Initializable {
 
     @FXML
     public TableView<Book> bookTable;
+    @FXML
+    public TableColumn<Book, Integer> col_bookID;
     @FXML
     public TableColumn<Book, String> col_bookTitle;
     @FXML
@@ -42,19 +42,11 @@ public class BookLibController implements Initializable {
     @FXML
     public TableColumn<Book, Date> col_bookReadDate;
 
-    private ObservableList<String> bookGenres = FXCollections.observableArrayList("Drama","Fairytale","Poetry","Satire","Review","Religion","Autobiography","Diary",
-            "True Crime","Fantasy","Adventure","Romance","Contemporary","Dystopian","Mystery",
-            "Horror","Thriller","Paranormal","Historical fiction", "Science fiction","Memoir",
-            "Cooking","Art","Self-help","Development","Motivational","Health","History","Travel",
-            "Guide","Humor","Children").sorted();
-    private ObservableList<Integer> bookRatings = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10);
-
     private ObservableList<Book> booksList = FXCollections.observableArrayList();
     private Connection connection;
-
+    private DialogUtils dialogUtils = new DialogUtils();
 
     public BookLibController() {
-
     }
 
     @Override
@@ -63,21 +55,20 @@ public class BookLibController implements Initializable {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM bookList")){
             while (resultSet.next()){
-                booksList.add(new Book(resultSet.getString("title"),
-                                       resultSet.getString("author"),
-                                       resultSet.getString("genre"),
-                                       resultSet.getString("description"),
-                                       resultSet.getString("ISBN"),
-                                       resultSet.getString("publisher"),
-                                       resultSet.getInt("rating"),
-                                       resultSet.getDate("ReadDate")));
-
+                booksList.add(new Book( resultSet.getString("title"),
+                                        resultSet.getString("author"),
+                                        resultSet.getString("genre"),
+                                        resultSet.getString("description"),
+                                        resultSet.getString("ISBN"),
+                                        resultSet.getString("publisher"),
+                                        resultSet.getInt("rating"),
+                                        resultSet.getDate("ReadDate")));
             }
         } catch (SQLException e){
-            System.out.println("SQLException : " + e.getMessage());
+            System.out.println("SQLException (INITIALIZE) : " + e.getMessage());
             e.printStackTrace();
         }
-
+        col_bookID.setCellValueFactory(new PropertyValueFactory<>("_id"));
         col_bookTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         col_bookAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
         col_bookGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
@@ -91,34 +82,19 @@ public class BookLibController implements Initializable {
     }
 
     public void addBook() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/addBookDialog.fxml"));
-            DialogPane addBookDialog = loader.load();
-            BookController bookController = loader.getController();
-            bookController.genrePick.setItems(bookGenres);
-            bookController.ratingPick.setItems(bookRatings);
-            Dialog<ButtonType> dialog = new Dialog<>();
-            dialog.setDialogPane(addBookDialog);
-            dialog.setTitle("Add book");
-
-            Optional<ButtonType> result = dialog.showAndWait();
-            if (result.get() == ButtonType.OK){
-                Book book = bookController.processResult();
-                booksList.add(book);
-                Helper.insertBook(book);
-            }
-        } catch (IOException | NoSuchElementException ioe){
-            System.out.println("Exception : " + ioe.getMessage());
-            ioe.printStackTrace();
-        }
-
+        Book book = dialogUtils.showDialog(DialogUtils.DIALOG_MODE.ADD);
+        booksList.add(book);
     }
 
     public void searchBook() {
+
     }
 
     public void editBook() {
+        dialogUtils.showDialog(DialogUtils.DIALOG_MODE.EDIT);
+        Book book = bookTable.getSelectionModel().getSelectedItem();
+        AddBookController controller = new AddBookController();
+        controller.processEditBook(book);
     }
 
     public void deleteBook() {
