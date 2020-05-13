@@ -1,7 +1,7 @@
 package com.kodpalmowy.utils;
 
 import com.kodpalmowy.controllers.AddBookController;
-import com.kodpalmowy.models.Book;
+import com.kodpalmowy.database.models.Book;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;

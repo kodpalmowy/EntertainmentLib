@@ -1,7 +1,7 @@
 package com.kodpalmowy.controllers;
 
 import com.kodpalmowy.database.utils.ConnectionClass;
-import com.kodpalmowy.models.Book;
+import com.kodpalmowy.models.BookFx;
 import com.kodpalmowy.utils.DialogUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,27 +22,27 @@ import java.util.ResourceBundle;
 public class BookLibController implements Initializable {
 
     @FXML
-    public TableView<Book> bookTable;
+    public TableView<BookFx> bookTable;
     @FXML
-    public TableColumn<Book, Integer> col_bookID;
+    public TableColumn<BookFx, Integer> col_bookID;
     @FXML
-    public TableColumn<Book, String> col_bookTitle;
+    public TableColumn<BookFx, String> col_bookTitle;
     @FXML
-    public TableColumn<Book, String> col_bookAuthor;
+    public TableColumn<BookFx, String> col_bookAuthor;
     @FXML
-    public TableColumn<Book, String> col_bookGenre;
+    public TableColumn<BookFx, String> col_bookGenre;
     @FXML
-    public TableColumn<Book, String> col_bookDescription;
+    public TableColumn<BookFx, String> col_bookDescription;
     @FXML
-    public TableColumn<Book, String> col_bookISBN;
+    public TableColumn<BookFx, String> col_bookISBN;
     @FXML
-    public TableColumn<Book, String> col_bookPublisher;
+    public TableColumn<BookFx, String> col_bookPublisher;
     @FXML
-    public TableColumn<Book, Integer> col_bookRating;
+    public TableColumn<BookFx, Integer> col_bookRating;
     @FXML
-    public TableColumn<Book, Date> col_bookReadDate;
+    public TableColumn<BookFx, Date> col_bookReadDate;
 
-    private ObservableList<Book> booksList = FXCollections.observableArrayList();
+    private ObservableList<BookFx> booksList = FXCollections.observableArrayList();
     private Connection connection;
     private DialogUtils dialogUtils = new DialogUtils();
 
@@ -54,16 +54,17 @@ public class BookLibController implements Initializable {
         try (Connection connection = ConnectionClass.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM bookList")){
-            while (resultSet.next()){
-                booksList.add(new Book( resultSet.getString("title"),
-                                        resultSet.getString("author"),
-                                        resultSet.getString("genre"),
-                                        resultSet.getString("description"),
-                                        resultSet.getString("ISBN"),
-                                        resultSet.getString("publisher"),
-                                        resultSet.getInt("rating"),
-                                        resultSet.getDate("ReadDate")));
-            }
+//            while (resultSet.next()){
+//                booksList.add(new BookFx( resultSet.getString("title"),
+//                                        resultSet.getString("author"),
+//                                        resultSet.getString("genre"),
+//                                        resultSet.getString("description"),
+//                                        resultSet.getString("ISBN"),
+//                                        resultSet.getString("publisher"),
+//                                        resultSet.getInt("rating"),
+//                                        resultSet.getDate("ReadDate")));
+//            }
+            // CHECK THAT! This might return Book object and later return converted BookFx object but i dunno for now
         } catch (SQLException e){
             System.out.println("SQLException (INITIALIZE) : " + e.getMessage());
             e.printStackTrace();
@@ -82,8 +83,11 @@ public class BookLibController implements Initializable {
     }
 
     public void addBook() {
-        Book book = dialogUtils.showDialog(DialogUtils.DIALOG_MODE.ADD);
-        booksList.add(book);
+//        BookFx book = dialogUtils.showDialog(DialogUtils.DIALOG_MODE.ADD);
+//        booksList.add(BookFx);
+        /**
+         *  TO BE CHANGED ...
+         */
     }
 
     public void searchBook() {
@@ -92,9 +96,12 @@ public class BookLibController implements Initializable {
 
     public void editBook() {
         dialogUtils.showDialog(DialogUtils.DIALOG_MODE.EDIT);
-        Book book = bookTable.getSelectionModel().getSelectedItem();
+//        Book book = bookTable.getSelectionModel().getSelectedItem();
         AddBookController controller = new AddBookController();
-        controller.processEditBook(book);
+//        controller.processEditBook(book);
+        /**
+         *  TO BE CHANGED ...
+         */
     }
 
     public void deleteBook() {

@@ -10,4 +10,5 @@ module com.kodpalmowy {
     exports com.kodpalmowy.models;
     exports com.kodpalmowy.database.utils;
     exports com.kodpalmowy.utils;
+    exports com.kodpalmowy.database.models;
 }

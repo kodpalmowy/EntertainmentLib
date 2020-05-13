@@ -1,5 +1,7 @@
 package com.kodpalmowy.database.utils;
 
+import com.kodpalmowy.database.dao.Dao;
+
 import java.sql.*;
 
 public class ConnectionClass {
@@ -31,7 +33,7 @@ public class ConnectionClass {
             DatabaseMetaData metaData = connection.getMetaData();
             ResultSet tablesInDB = metaData.getTables(null, null, "bookList", null);
             if (!tablesInDB.next()) {
-                SQLQueries.createTable();
+                Dao.createAllTables();
             }
             tablesInDB.close();
         } catch (SQLException slqe) {

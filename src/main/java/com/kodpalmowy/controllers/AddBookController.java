@@ -1,14 +1,13 @@
 package com.kodpalmowy.controllers;
 
-import com.kodpalmowy.database.utils.SQLQueries;
-import com.kodpalmowy.models.Book;
+import com.kodpalmowy.database.models.Book;
+import com.kodpalmowy.models.BookFx;
+import com.kodpalmowy.models.BookModel;
 import com.kodpalmowy.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-
-import java.sql.Date;
 
 public class AddBookController {
     @FXML
@@ -28,23 +27,21 @@ public class AddBookController {
     @FXML
     public DatePicker datePick;
 
+    private BookModel bookModel;
+
+    @FXML
+    public void initialize(){
+
+    }
     public Book processAddBook(){
-        String title = titleArea.getText().trim();
-        String author = authorArea.getText().trim();
-        String description = descriptionArea.getText().trim();
-        String isbn = isbnArea.getText().trim();
-        String publisher = publisherArea.getText().trim();
-        Date date;
-        try {
-            date = java.sql.Date.valueOf(datePick.getValue());
-        } catch (NullPointerException npe){
-            date = null;
-            // makes it possible to not to pick date
-            // Later change it to something more elegant
-        }
-        Book book = new Book(title,author,genrePick.getValue(),description,isbn,publisher,ratingPick.getValue(),date);
-        SQLQueries.insertBook(book);
-        return book;
+        // Add processing for BookFX
+        return null;
+    }
+
+    public void setBook(BookFx bookFx) {
+//        titleArea.textProperty().bindBidirectional(bookFx.getTitle());
+        // This set method might be an editBook method... Watch Erradi tutorial on this.
+        // You might wanna add additional getters for BookFx -> check that in tutorial if needed
     }
 
     public void processEditBook(Book book){

@@ -1,8 +1,8 @@
-package com.kodpalmowy.models;
+package com.kodpalmowy.database.models;
 
 import java.util.Date;
 
-public class Book {
+public class Book implements BaseModel{
 
     private int _id;
     private String title;
@@ -14,15 +14,7 @@ public class Book {
     private int rating;
     private Date readDate;
 
-    public Book(String title, String author, String genre, String description, String ISBN, String publisher, int rating, Date readDate) {
-        this.title = title;
-        this.author = author;
-        this.genre = genre;
-        this.description = description;
-        this.ISBN = ISBN;
-        this.publisher = publisher;
-        this.rating = rating;
-        this.readDate = readDate;
+    public Book() {
     }
 
     public int get_id() {
