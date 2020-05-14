@@ -1,8 +1,10 @@
 package com.kodpalmowy.controllers;
 
-import com.kodpalmowy.database.utils.ConnectionClass;
+import com.kodpalmowy.database.dao.BookDao;
+import com.kodpalmowy.database.models.Book;
 import com.kodpalmowy.models.BookFx;
 import com.kodpalmowy.utils.DialogUtils;
+import com.kodpalmowy.utils.converters.BookConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,11 +14,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class BookLibController implements Initializable {
@@ -42,33 +41,20 @@ public class BookLibController implements Initializable {
     @FXML
     public TableColumn<BookFx, Date> col_bookReadDate;
 
-    private ObservableList<BookFx> booksList = FXCollections.observableArrayList();
-    private Connection connection;
-    private DialogUtils dialogUtils = new DialogUtils();
+    private final ObservableList<BookFx> bookFxObservableList = FXCollections.observableArrayList();
+    private final DialogUtils dialogUtils = new DialogUtils();
 
     public BookLibController() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try (Connection connection = ConnectionClass.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM bookList")){
-//            while (resultSet.next()){
-//                booksList.add(new BookFx( resultSet.getString("title"),
-//                                        resultSet.getString("author"),
-//                                        resultSet.getString("genre"),
-//                                        resultSet.getString("description"),
-//                                        resultSet.getString("ISBN"),
-//                                        resultSet.getString("publisher"),
-//                                        resultSet.getInt("rating"),
-//                                        resultSet.getDate("ReadDate")));
-//            }
-            // CHECK THAT! This might return Book object and later return converted BookFx object but i dunno for now
-        } catch (SQLException e){
-            System.out.println("SQLException (INITIALIZE) : " + e.getMessage());
-            e.printStackTrace();
-        }
+        BookDao bookDao = new BookDao();
+        List<Book> bookList = bookDao.queryBooks();
+        bookList.forEach(book -> {
+            BookFx bookFx = BookConverter.convertToBookFx(book);
+            bookFxObservableList.add(bookFx);
+        });
         col_bookID.setCellValueFactory(new PropertyValueFactory<>("_id"));
         col_bookTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         col_bookAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
@@ -79,7 +65,7 @@ public class BookLibController implements Initializable {
         col_bookRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         col_bookReadDate.setCellValueFactory(new PropertyValueFactory<>("readDate"));
 
-        bookTable.setItems(booksList);
+        bookTable.setItems(bookFxObservableList);
     }
 
     public void addBook() {

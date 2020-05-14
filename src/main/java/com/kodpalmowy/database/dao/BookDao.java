@@ -2,10 +2,16 @@ package com.kodpalmowy.database.dao;
 
 import com.kodpalmowy.database.models.Book;
 import com.kodpalmowy.database.utils.ConnectionClass;
+import com.kodpalmowy.utils.Utils;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookDao extends Dao{
+
+    private List<Book> bookList = new ArrayList<>();
+
     public void insertBook(Book book){
         String SQL_INSERT_QUERY = "INSERT INTO bookList (title, author, genre, description, ISBN, publisher, rating, readDate) VALUES (?,?,?,?,?,?,?,?)";
         try (Connection connection = ConnectionClass.getConnection();
@@ -24,6 +30,31 @@ public class BookDao extends Dao{
             // change this later to logger
         }
     }
+
+    public List<Book> queryBooks(){
+        String SQL_SELECT_QUERY = "SELECT * FROM bookList";
+        try (Connection connection = ConnectionClass.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SQL_SELECT_QUERY)){
+            while (resultSet.next()){
+                Book book = new Book();
+                book.set_id(resultSet.getInt("_ID"));
+                book.setTitle(resultSet.getString("title"));
+                book.setAuthor(resultSet.getString("author"));
+                book.setGenre(resultSet.getString("genre"));
+                book.setDescription(resultSet.getString("description"));
+                book.setISBN(resultSet.getString("ISBN"));
+                book.setPublisher(resultSet.getString("publisher"));
+                book.setRating(resultSet.getInt("rating"));
+                book.setReadDate(Utils.convertToDate(resultSet.getDate("readDate").toLocalDate()));
+                bookList.add(book);
+            }
+        } catch (SQLException sqle) {
+            System.out.println("SQLException(SELECT) : " + sqle.getMessage());
+        }
+        return bookList;
+    }
+
     public void deleteBook(Integer id){
         String SQL_DELETE_QUERY = "DELETE FROM bookList WHERE _ID=" + id;
         try (Connection connection = ConnectionClass.getConnection();
