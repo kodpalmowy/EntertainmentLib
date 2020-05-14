@@ -23,7 +23,7 @@ public class BookDao extends Dao{
             preparedStatement.setString(5, book.getISBN());
             preparedStatement.setString(6, book.getPublisher());
             preparedStatement.setInt(7, book.getRating());
-            preparedStatement.setDate(8, (Date) book.getReadDate());
+            preparedStatement.setDate(8, java.sql.Date.valueOf(Utils.convertToLocalDate(book.getReadDate())));
             preparedStatement.execute();
         } catch (SQLException sqle) {
             System.out.println("SQLException(INSERT) : " + sqle.getMessage());
@@ -38,7 +38,7 @@ public class BookDao extends Dao{
              ResultSet resultSet = statement.executeQuery(SQL_SELECT_QUERY)){
             while (resultSet.next()){
                 Book book = new Book();
-                book.set_id(resultSet.getInt("_ID"));
+                book.setBookId(resultSet.getInt("bookId"));
                 book.setTitle(resultSet.getString("title"));
                 book.setAuthor(resultSet.getString("author"));
                 book.setGenre(resultSet.getString("genre"));
@@ -56,12 +56,12 @@ public class BookDao extends Dao{
     }
 
     public void deleteBook(Integer id){
-        String SQL_DELETE_QUERY = "DELETE FROM bookList WHERE _ID=" + id;
+        String SQL_DELETE_QUERY = "DELETE FROM bookList WHERE bookId=" + id;
         try (Connection connection = ConnectionClass.getConnection();
              Statement statement = connection.createStatement()){
-            statement.executeQuery(SQL_DELETE_QUERY);
+            statement.executeUpdate(SQL_DELETE_QUERY);
         } catch (SQLException sqle) {
-            System.out.println("SQLException(INSERT) : " + sqle.getMessage());
+            System.out.println("SQLException(DELETE) : " + sqle.getMessage());
             // change this later to logger
         }
     }

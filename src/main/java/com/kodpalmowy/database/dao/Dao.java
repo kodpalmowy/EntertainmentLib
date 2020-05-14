@@ -8,8 +8,8 @@ import java.sql.Statement;
 
 public abstract class Dao {
     private static void createBookTable() {
-        String SQL_CREATE_BOOKS_TABLE_QUERY = "CREATE TABLE bookList (_ID INT NOT NULL AUTO_INCREMENT, title VARCHAR(100) NOT NULL, author VARCHAR(100) NOT NULL, genre VARCHAR(50), description VARCHAR(300), " +
-                "ISBN VARCHAR(25), publisher VARCHAR(100), rating INT(10), readDate DATETIME, PRIMARY KEY (_id)";
+        String SQL_CREATE_BOOKS_TABLE_QUERY = "CREATE TABLE bookList (bookId INT NOT NULL AUTO_INCREMENT, title VARCHAR(100) NOT NULL, author VARCHAR(100) NOT NULL, genre VARCHAR(50), description VARCHAR(300), " +
+                "ISBN VARCHAR(25), publisher VARCHAR(100), rating INT(10), readDate DATETIME, PRIMARY KEY (bookId)";
         tableUtil(SQL_CREATE_BOOKS_TABLE_QUERY);
     }
 

@@ -1,60 +1,65 @@
 package com.kodpalmowy.controllers;
 
-import com.kodpalmowy.database.models.Book;
-import com.kodpalmowy.models.BookFx;
 import com.kodpalmowy.models.BookModel;
-import com.kodpalmowy.utils.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
+import java.time.LocalDate;
+
 public class AddBookController {
     @FXML
-    public TextField titleArea;
+    private TextField titleArea;
     @FXML
-    public TextField authorArea;
+    private TextField authorArea;
     @FXML
     public ComboBox<String> genrePick;
     @FXML
-    public TextField descriptionArea;
+    private TextField descriptionArea;
     @FXML
-    public TextField isbnArea;
+    private TextField isbnArea;
     @FXML
-    public TextField publisherArea;
+    private TextField publisherArea;
     @FXML
     public ComboBox<Integer> ratingPick;
     @FXML
     public DatePicker datePick;
 
-    private BookModel bookModel;
+    public BookModel bookModel;
+
+    private final ObservableList<String> bookGenres = FXCollections.observableArrayList("Drama","Fairytale","Poetry","Satire","Review","Religion","Autobiography","Diary",
+            "True Crime","Fantasy","Adventure","Romance","Contemporary","Dystopian","Mystery",
+            "Horror","Thriller","Paranormal","Historical fiction", "Science fiction","Memoir",
+            "Cooking","Art","Self-help","Development","Motivational","Health","History","Travel",
+            "Guide","Humor","Children","Novel","Learning").sorted();
+    private final ObservableList<Integer> bookRatings = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10);
 
     @FXML
     public void initialize(){
-
-    }
-    public Book processAddBook(){
-        // Add processing for BookFX
-        return null;
+        datePick.setValue(LocalDate.now());
+        this.bookModel = new BookModel();
+        setBook();
     }
 
-    public void setBook(BookFx bookFx) {
-//        titleArea.textProperty().bindBidirectional(bookFx.getTitle());
-        // This set method might be an editBook method... Watch Erradi tutorial on this.
-        // You might wanna add additional getters for BookFx -> check that in tutorial if needed
+    public void setDefaultValues(){
+        genrePick.setItems(bookGenres);
+        ratingPick.setItems(bookRatings);
+        ratingPick.setValue(null);
+        datePick.setValue(LocalDate.now());
     }
 
-    public void processEditBook(Book book){
-        titleArea.setText(book.getTitle());
-        authorArea.setText(book.getAuthor());
-        genrePick.setValue(book.getGenre());
-        descriptionArea.setText(book.getDescription());
-        isbnArea.setText(book.getISBN());
-        publisherArea.setText(book.getPublisher());
-        ratingPick.setValue(book.getRating());
-        datePick.setValue(Utils.convertToLocalDate(book.getReadDate()));
-        processAddBook();
+    private void setBook() {
+        titleArea.textProperty().bindBidirectional(bookModel.getBookFxObjectProperty().titleProperty());
+        authorArea.textProperty().bindBidirectional(bookModel.getBookFxObjectProperty().authorProperty());
+        genrePick.valueProperty().bindBidirectional(bookModel.getBookFxObjectProperty().genreProperty());
+        descriptionArea.textProperty().bindBidirectional(bookModel.getBookFxObjectProperty().descriptionProperty());
+        isbnArea.textProperty().bindBidirectional(bookModel.getBookFxObjectProperty().ISBNProperty());
+        publisherArea.textProperty().bindBidirectional(bookModel.getBookFxObjectProperty().publisherProperty());
+        ratingPick.valueProperty().bindBidirectional(bookModel.getBookFxObjectProperty().ratingProperty().asObject());
+        datePick.valueProperty().bindBidirectional(bookModel.getBookFxObjectProperty().readDateProperty());
     }
-
 
 }

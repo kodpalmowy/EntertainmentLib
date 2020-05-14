@@ -7,7 +7,7 @@ import com.kodpalmowy.utils.Utils;
 public class BookConverter {
     public static Book convertToBook(BookFx bookFx){
         Book book = new Book();
-        book.set_id(bookFx.get_id());
+        book.setBookId(bookFx.getBookId());
         book.setTitle(bookFx.getTitle());
         book.setAuthor(bookFx.getAuthor());
         book.setDescription(bookFx.getDescription());
@@ -21,7 +21,7 @@ public class BookConverter {
 
     public static BookFx convertToBookFx(Book book){
         BookFx bookFx = new BookFx();
-        bookFx.set_id(book.get_id());
+        bookFx.setBookId(book.getBookId());
         bookFx.setTitle(book.getTitle());
         bookFx.setAuthor(book.getAuthor());
         bookFx.setDescription(book.getDescription());

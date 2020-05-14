@@ -2,12 +2,10 @@ package com.kodpalmowy.utils;
 
 import com.kodpalmowy.controllers.AddBookController;
 import com.kodpalmowy.database.models.Book;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.kodpalmowy.models.BookFx;
+import com.kodpalmowy.utils.converters.BookConverter;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;
@@ -15,17 +13,8 @@ import java.util.Optional;
 
 public class DialogUtils {
 
-    private final ObservableList<String> bookGenres = FXCollections.observableArrayList("Drama","Fairytale","Poetry","Satire","Review","Religion","Autobiography","Diary",
-            "True Crime","Fantasy","Adventure","Romance","Contemporary","Dystopian","Mystery",
-            "Horror","Thriller","Paranormal","Historical fiction", "Science fiction","Memoir",
-            "Cooking","Art","Self-help","Development","Motivational","Health","History","Travel",
-            "Guide","Humor","Children").sorted();
-    private final ObservableList<Integer> bookRatings = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10);
-
-    public enum DIALOG_MODE {ADD, EDIT}
-
-    public Book showDialog(DIALOG_MODE mode){
-        Book book = null;
+    public BookFx showDialog(){
+        BookFx bookFx = null;
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/addBookDialog.fxml"));
@@ -34,17 +23,26 @@ public class DialogUtils {
             dialog.setDialogPane(addBookDialog);
             dialog.setTitle("Add book");
             AddBookController addBookController = loader.getController();
-            addBookController.genrePick.setItems(bookGenres);
-            addBookController.ratingPick.setItems(bookRatings);
+            addBookController.setDefaultValues();
             Optional<ButtonType> result = dialog.showAndWait();
             if (result.get() == ButtonType.OK){
-                book = addBookController.processAddBook();
+                Book book = addBookController.bookModel.saveBookInDB();
+                bookFx = BookConverter.convertToBookFx(book);
             }
         } catch (IOException | NoSuchElementException ioe){
             System.out.println("Exception (ADD BOOK) : " + ioe.getMessage());
             ioe.printStackTrace();
         }
-        return book;
+        return bookFx;
+    }
+    public Optional<ButtonType> showAlertDialog(String title, String header, String content){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.setGraphic(null);
+        Optional<ButtonType> alertResult = alert.showAndWait();
+        return alertResult;
     }
 
 }

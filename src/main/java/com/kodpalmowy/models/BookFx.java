@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public class BookFx {
 
-    private SimpleIntegerProperty _id = new SimpleIntegerProperty();
+    private SimpleIntegerProperty bookId = new SimpleIntegerProperty();
     private SimpleStringProperty title = new SimpleStringProperty();
     private SimpleStringProperty author = new SimpleStringProperty();
     private SimpleStringProperty genre = new SimpleStringProperty();
@@ -19,12 +19,44 @@ public class BookFx {
     private SimpleIntegerProperty rating = new SimpleIntegerProperty();
     private ObjectProperty<LocalDate> readDate = new SimpleObjectProperty<>();
 
-    public int get_id() {
-        return _id.get();
+    public int getBookId() {
+        return bookId.get();
     }
 
-    public void set_id(int _id) {
-        this._id.set(_id);
+    public SimpleStringProperty titleProperty() {
+        return title;
+    }
+
+    public SimpleStringProperty authorProperty() {
+        return author;
+    }
+
+    public SimpleStringProperty genreProperty() {
+        return genre;
+    }
+
+    public SimpleStringProperty descriptionProperty() {
+        return description;
+    }
+
+    public SimpleStringProperty ISBNProperty() {
+        return ISBN;
+    }
+
+    public SimpleStringProperty publisherProperty() {
+        return publisher;
+    }
+
+    public SimpleIntegerProperty ratingProperty() {
+        return rating;
+    }
+
+    public ObjectProperty<LocalDate> readDateProperty() {
+        return readDate;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId.set(bookId);
     }
 
     public String getTitle() {
@@ -95,7 +127,7 @@ public class BookFx {
     @Override
     public String toString() {
         return "BookFx{" +
-                "_id=" + _id +
+                "_id=" + bookId +
                 ", title=" + title +
                 ", author=" + author +
                 ", genre=" + genre +

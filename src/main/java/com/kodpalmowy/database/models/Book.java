@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Book implements BaseModel{
 
-    private int _id;
+    private int bookId;
     private String title;
     private String author;
     private String genre;
@@ -17,12 +17,12 @@ public class Book implements BaseModel{
     public Book() {
     }
 
-    public int get_id() {
-        return _id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void set_id(int _id) {
-        this._id = _id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public String getTitle() {

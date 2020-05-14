@@ -10,10 +10,11 @@ public class BookModel {
 
     private final ObjectProperty<BookFx> bookFxObjectProperty = new SimpleObjectProperty<>(new BookFx());
 
-    public void saveBookInDB(){
+    public Book saveBookInDB(){
         Book book = BookConverter.convertToBook(this.getBookFxObjectProperty());
         BookDao bookDao = new BookDao();
         bookDao.insertBook(book);
+        return book;
     }
 
     public BookFx getBookFxObjectProperty() {
