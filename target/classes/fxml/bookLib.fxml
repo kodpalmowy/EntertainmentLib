@@ -12,22 +12,22 @@
    <top>
       <HBox prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#addBook" prefHeight="70.0" prefWidth="150.0" text="%addBookButton">
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAddBook" prefHeight="70.0" prefWidth="150.0" text="%addBookButton">
                <HBox.margin>
                   <Insets left="25.0" top="5.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#searchBook" prefHeight="70.0" prefWidth="150.0" text="%searchBook">
+            <Button mnemonicParsing="false" onAction="#handleSearchBook" prefHeight="70.0" prefWidth="150.0" text="%searchBook">
                <HBox.margin>
                   <Insets left="5.0" top="5.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#editBook" prefHeight="70.0" prefWidth="150.0" text="%editBook">
+            <Button fx:id="editButton" mnemonicParsing="false" onAction="#handleEditBook" prefHeight="70.0" prefWidth="150.0" text="%editBook">
                <HBox.margin>
                   <Insets left="5.0" top="5.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#deleteBook" prefHeight="70.0" prefWidth="150.0" text="%deleteBook">
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDelete" prefHeight="70.0" prefWidth="150.0" text="%deleteBook">
                <HBox.margin>
                   <Insets left="5.0" top="5.0" />
                </HBox.margin>

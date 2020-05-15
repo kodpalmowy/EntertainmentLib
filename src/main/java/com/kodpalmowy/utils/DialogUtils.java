@@ -1,9 +1,9 @@
 package com.kodpalmowy.utils;
 
-import com.kodpalmowy.controllers.AddBookController;
-import com.kodpalmowy.database.models.Book;
+import com.kodpalmowy.controllers.BookController;
+import com.kodpalmowy.controllers.BookLibController;
 import com.kodpalmowy.models.BookFx;
-import com.kodpalmowy.utils.converters.BookConverter;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
@@ -13,36 +13,38 @@ import java.util.Optional;
 
 public class DialogUtils {
 
-    public BookFx showDialog(){
-        BookFx bookFx = null;
+    public void showDialog(BookFx bookFx, String dialogTitle, BookLibController.DialogMode mode, ObservableList<BookFx> list){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/addBookDialog.fxml"));
+            loader.setLocation(getClass().getResource("/fxml/bookDialog.fxml"));
             DialogPane addBookDialog = loader.load();
+            BookController bookController = loader.getController();
+            bookController.setBook(bookFx);
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(addBookDialog);
-            dialog.setTitle("Add book");
-            AddBookController addBookController = loader.getController();
-            addBookController.setDefaultValues();
+            dialog.setTitle(dialogTitle);
+            bookController.setDefaultValues();
             Optional<ButtonType> result = dialog.showAndWait();
-            if (result.get() == ButtonType.OK){
-                Book book = addBookController.bookModel.saveBookInDB();
-                bookFx = BookConverter.convertToBookFx(book);
+            if (result.orElse(null) == ButtonType.OK){
+                if (mode == BookLibController.DialogMode.ADD){
+                    bookController.bookModel.saveBookInDB(bookFx);
+                } else if (mode == BookLibController.DialogMode.EDIT){
+                    bookController.bookModel.updateBookInDB(bookFx);
+                }
             }
         } catch (IOException | NoSuchElementException ioe){
             System.out.println("Exception (ADD BOOK) : " + ioe.getMessage());
             ioe.printStackTrace();
         }
-        return bookFx;
     }
+
     public Optional<ButtonType> showAlertDialog(String title, String header, String content){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.setGraphic(null);
-        Optional<ButtonType> alertResult = alert.showAndWait();
-        return alertResult;
+        return alert.showAndWait();
     }
 
 }

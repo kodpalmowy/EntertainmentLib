@@ -1,5 +1,6 @@
 package com.kodpalmowy.controllers;
 
+import com.kodpalmowy.models.BookFx;
 import com.kodpalmowy.models.BookModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,7 +11,7 @@ import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
 
-public class AddBookController {
+public class BookController {
     @FXML
     private TextField titleArea;
     @FXML
@@ -29,6 +30,7 @@ public class AddBookController {
     public DatePicker datePick;
 
     public BookModel bookModel;
+    private BookFx bookFx;
 
     private final ObservableList<String> bookGenres = FXCollections.observableArrayList("Drama","Fairytale","Poetry","Satire","Review","Religion","Autobiography","Diary",
             "True Crime","Fantasy","Adventure","Romance","Contemporary","Dystopian","Mystery",
@@ -39,27 +41,26 @@ public class AddBookController {
 
     @FXML
     public void initialize(){
-        datePick.setValue(LocalDate.now());
         this.bookModel = new BookModel();
-        setBook();
     }
 
     public void setDefaultValues(){
         genrePick.setItems(bookGenres);
         ratingPick.setItems(bookRatings);
-        ratingPick.setValue(null);
+        ratingPick.setValue(1);
         datePick.setValue(LocalDate.now());
     }
 
-    private void setBook() {
-        titleArea.textProperty().bindBidirectional(bookModel.getBookFxObjectProperty().titleProperty());
-        authorArea.textProperty().bindBidirectional(bookModel.getBookFxObjectProperty().authorProperty());
-        genrePick.valueProperty().bindBidirectional(bookModel.getBookFxObjectProperty().genreProperty());
-        descriptionArea.textProperty().bindBidirectional(bookModel.getBookFxObjectProperty().descriptionProperty());
-        isbnArea.textProperty().bindBidirectional(bookModel.getBookFxObjectProperty().ISBNProperty());
-        publisherArea.textProperty().bindBidirectional(bookModel.getBookFxObjectProperty().publisherProperty());
-        ratingPick.valueProperty().bindBidirectional(bookModel.getBookFxObjectProperty().ratingProperty().asObject());
-        datePick.valueProperty().bindBidirectional(bookModel.getBookFxObjectProperty().readDateProperty());
+    public void setBook(BookFx bookFx){
+        this.bookFx = bookFx;
+        titleArea.textProperty().bindBidirectional(bookFx.titleProperty());
+        authorArea.textProperty().bindBidirectional(bookFx.authorProperty());
+        genrePick.valueProperty().bindBidirectional(bookFx.genreProperty());
+        descriptionArea.textProperty().bindBidirectional(bookFx.descriptionProperty());
+        isbnArea.textProperty().bindBidirectional(bookFx.ISBNProperty());
+        publisherArea.textProperty().bindBidirectional(bookFx.publisherProperty());
+        ratingPick.valueProperty().bindBidirectional(bookFx.ratingProperty().asObject());
+        datePick.valueProperty().bindBidirectional(bookFx.readDateProperty());
     }
 
 }

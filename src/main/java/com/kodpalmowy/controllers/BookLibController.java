@@ -7,8 +7,10 @@ import com.kodpalmowy.utils.DialogUtils;
 import com.kodpalmowy.utils.converters.BookConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,32 +25,45 @@ import java.util.ResourceBundle;
 public class BookLibController implements Initializable {
 
     @FXML
-    public TableView<BookFx> bookTable;
+    private TableView<BookFx> bookTable;
     @FXML
-    public TableColumn<BookFx, String> col_bookTitle;
+    private TableColumn<BookFx, String> col_bookTitle;
     @FXML
-    public TableColumn<BookFx, String> col_bookAuthor;
+    private TableColumn<BookFx, String> col_bookAuthor;
     @FXML
-    public TableColumn<BookFx, String> col_bookGenre;
+    private TableColumn<BookFx, String> col_bookGenre;
     @FXML
-    public TableColumn<BookFx, String> col_bookDescription;
+    private TableColumn<BookFx, String> col_bookDescription;
     @FXML
-    public TableColumn<BookFx, String> col_bookISBN;
+    private TableColumn<BookFx, String> col_bookISBN;
     @FXML
-    public TableColumn<BookFx, String> col_bookPublisher;
+    private TableColumn<BookFx, String> col_bookPublisher;
     @FXML
-    public TableColumn<BookFx, Integer> col_bookRating;
+    private TableColumn<BookFx, Integer> col_bookRating;
     @FXML
-    public TableColumn<BookFx, Date> col_bookReadDate;
+    private TableColumn<BookFx, Date> col_bookReadDate;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button editButton;
 
     private final ObservableList<BookFx> bookFxObservableList = FXCollections.observableArrayList();
     private final DialogUtils dialogUtils = new DialogUtils();
+
+    private String DIALOG_TITLE;
+    public enum DialogMode {
+        ADD, EDIT
+    }
 
     public BookLibController() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        deleteButton.disableProperty().bind(bookTable.getSelectionModel().selectedItemProperty().isNull());
+        editButton.disableProperty().bind(bookTable.getSelectionModel().selectedItemProperty().isNull());
         BookDao bookDao = new BookDao();
         List<Book> bookList = bookDao.queryBooks();
         bookList.forEach(book -> {
@@ -67,30 +82,43 @@ public class BookLibController implements Initializable {
         bookTable.setItems(bookFxObservableList);
     }
 
-    public void addBook() {
-        BookFx bookFx = dialogUtils.showDialog();
-        bookFxObservableList.add(bookFx);
+    public void handleAddBook(ActionEvent event) {
+        handleEditBook(event);
     }
 
-    public void searchBook() {
-
-    }
-
-    public void editBook() {
-        dialogUtils.showDialog();
-        BookFx bookFx = bookTable.getSelectionModel().getSelectedItem();
-        AddBookController controller = new AddBookController();
+    public void handleSearchBook() {
 
     }
 
-    public void deleteBook() {
+    public void handleEditBook(ActionEvent event) {
+        BookFx bookFx = null;
+        DIALOG_TITLE = "";
+        DialogMode mode = null;
+        if (event.getSource().equals(addButton)){
+            mode = DialogMode.ADD;
+            DIALOG_TITLE = "ADD BOOK";
+            bookFx = new BookFx();
+        } else if (event.getSource().equals(editButton)){
+            mode = DialogMode.EDIT;
+            DIALOG_TITLE = "EDIT BOOK";
+            bookFx = bookTable.getSelectionModel().getSelectedItem();
+        }
+        dialogUtils.showDialog(bookFx,DIALOG_TITLE, mode, this.bookFxObservableList);
+        if (mode == DialogMode.ADD) {
+            BookDao bookDao = new BookDao();
+            bookFx = BookConverter.convertToBookFx(bookDao.getLastEntry());
+            bookFxObservableList.add(bookFx);
+        }
+    }
+
+    public void handleDelete() {
         BookFx bookFx = bookTable.getSelectionModel().getSelectedItem();
         int bookIdToDelete = bookFx.getBookId();
         String ALERT_TITLE = "Delete Book";
         String ALERT_HEADER = "Are you sure you want to delete:";
         String ALERT_CONTENT = bookFx.getTitle() + " : " + bookFx.getAuthor();
         Optional<ButtonType> alertResult = dialogUtils.showAlertDialog(ALERT_TITLE, ALERT_HEADER, ALERT_CONTENT);
-        if (alertResult.get() == ButtonType.OK) {
+        if (alertResult.orElse(null) == ButtonType.OK) {
             BookDao bookDao = new BookDao();
             bookDao.deleteBook(bookIdToDelete);
             bookFxObservableList.remove(bookFx);
