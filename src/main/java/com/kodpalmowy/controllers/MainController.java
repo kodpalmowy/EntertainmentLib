@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class MainController {
+
     @FXML
     private MenuButtonsController menuButtonsController;
     @FXML
@@ -20,14 +21,19 @@ public class MainController {
     }
 
     public void setCenter(String fxml){
+        Parent parent = getParent(fxml);
+        mainBorderPane.setCenter(parent);
+    }
+
+    private Parent getParent(String fxml) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles.language");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml),resourceBundle);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml), resourceBundle);
         Parent parent = null;
         try {
             parent = fxmlLoader.load();
-        } catch (IOException ioe){
+        } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-        mainBorderPane.setCenter(parent);
+        return parent;
     }
 }

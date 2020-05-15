@@ -4,16 +4,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="mainBorderPane" prefHeight="800.0" prefWidth="1200.0" styleClass="borderPane"
-            stylesheets="@../css/mainBorderPane_stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kodpalmowy.controllers.MainController">
+<BorderPane fx:id="mainBorderPane" prefHeight="800.0" prefWidth="1400.0" styleClass="borderPane" stylesheets="@../css/mainBorderPane_stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kodpalmowy.controllers.MainController">
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
           <fx:include fx:id="menuButtons" source="menuButtons.fxml" />
       </VBox>
    </left>
    <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT">
           <fx:include source="welcomeScreen.fxml" />
       </HBox>
    </center>

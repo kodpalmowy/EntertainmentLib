@@ -26,7 +26,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.setTitle(resourceBundle.getString("title.app"));
         stage.show();
-
+        stage.setResizable(false);
         ConnectionClass.initializeDB();
     }
 

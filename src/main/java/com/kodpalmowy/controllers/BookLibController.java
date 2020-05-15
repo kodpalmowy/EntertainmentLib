@@ -86,10 +86,6 @@ public class BookLibController implements Initializable {
         handleEditBook(event);
     }
 
-    public void handleSearchBook() {
-
-    }
-
     public void handleEditBook(ActionEvent event) {
         BookFx bookFx = null;
         DIALOG_TITLE = "";
@@ -123,9 +119,5 @@ public class BookLibController implements Initializable {
             bookDao.deleteBook(bookIdToDelete);
             bookFxObservableList.remove(bookFx);
         }
-    }
-
-    public void filterBooks() {
-
     }
 }
