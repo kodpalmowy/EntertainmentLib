@@ -1,0 +1,25 @@
+.labels {
+    -fx-text-fill: #a5ffac;
+}
+.clearButton {
+    -fx-background-radius: 30 30 30 30;
+    -fx-background-color: #a5ffac;
+    -fx-text-fill: #4E5F73;
+}
+.clearButton:hover{
+    -fx-background-radius: 30 30 30 30;
+    -fx-background-color: #b2ffcc;
+    -fx-text-fill: #4E5F73;
+}
+.clearButton:pressed{
+    -fx-background-radius: 30 30 30 30;
+    -fx-background-color: #6fdaa4;
+    -fx-text-fill: #4E5F73;
+}
+.check-box{
+    -fx-tick-label-fill: #a5ffac;
+    -fx-text-fill: #a5ffac;
+}
+.slider .axis{
+    -fx-tick-label-fill: #a5ffac;
+}

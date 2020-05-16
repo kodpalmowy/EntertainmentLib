@@ -1,18 +1,18 @@
 .button1 {
     -fx-background-color: #4E5F73;
-    -fx-background-radius: 45 0 0 45;
+    -fx-background-radius: 45 45 45 45;
     -fx-text-fill: #a5ffac;
 }
 
 .button1:hover {
     -fx-background-color: #6E7E8A;
-    -fx-background-radius: 45 0 0 45;
+    -fx-background-radius: 45 45 45 45;
     -fx-text-fill: #a5ffac;
 }
 
 .button1:pressed {
     -fx-background-color: #99ACAC;
-    -fx-background-radius: 45 0 0 45;
+    -fx-background-radius: 45 45 45 45;
     -fx-text-fill: #a5ffac;
 }
 .vbox {

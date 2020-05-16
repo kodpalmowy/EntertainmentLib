@@ -7,13 +7,12 @@ import com.kodpalmowy.utils.DialogUtils;
 import com.kodpalmowy.utils.converters.BookConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -48,11 +47,12 @@ public class BookLibController implements Initializable {
     private Button addButton;
     @FXML
     private Button editButton;
+    @FXML
+    private FilterController filterController;
 
     private final ObservableList<BookFx> bookFxObservableList = FXCollections.observableArrayList();
     private final DialogUtils dialogUtils = new DialogUtils();
 
-    private String DIALOG_TITLE;
     public enum DialogMode {
         ADD, EDIT
     }
@@ -62,14 +62,48 @@ public class BookLibController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        deleteButton.disableProperty().bind(bookTable.getSelectionModel().selectedItemProperty().isNull());
-        editButton.disableProperty().bind(bookTable.getSelectionModel().selectedItemProperty().isNull());
+        disableButton(deleteButton, bookTable);
+        disableButton(editButton,bookTable);
         BookDao bookDao = new BookDao();
         List<Book> bookList = bookDao.queryBooks();
+        obListAddAll(bookList);
+        FilteredList<BookFx> filteredList = new FilteredList<>(bookFxObservableList, value -> true);
+        filterController.setBookLibController(this);
+        TextField searchField = filterController.getSearchTextField();
+        searchListener(filteredList, searchField);
+        SortedList<BookFx> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(bookTable.comparatorProperty());
+        column_SetCellValueFactory();
+        bookTable.setItems(sortedList);
+    }
+
+    private void disableButton(Button button, TableView<BookFx> tableView){
+        button.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
+    }
+
+    private void searchListener(FilteredList<BookFx> filteredList, TextField searchField) {
+        searchField.textProperty().addListener((obList, oldValue, newValue) ->
+                filteredList.setPredicate(bookFx -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCase = newValue.toLowerCase();
+                    if (bookFx.getTitle().toLowerCase().contains(lowerCase)) {
+                        return true;
+                    } else if (bookFx.getAuthor().toLowerCase().contains(lowerCase)) {
+                        return true;
+                    } else return bookFx.getDescription().toLowerCase().contains(lowerCase);
+                }));
+    }
+
+    private void obListAddAll(List<Book> bookList) {
         bookList.forEach(book -> {
             BookFx bookFx = BookConverter.convertToBookFx(book);
             bookFxObservableList.add(bookFx);
         });
+    }
+
+    private void column_SetCellValueFactory() {
         col_bookTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         col_bookAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
         col_bookGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
@@ -78,8 +112,6 @@ public class BookLibController implements Initializable {
         col_bookPublisher.setCellValueFactory(new PropertyValueFactory<>("publisher"));
         col_bookRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         col_bookReadDate.setCellValueFactory(new PropertyValueFactory<>("readDate"));
-
-        bookTable.setItems(bookFxObservableList);
     }
 
     public void handleAddBook(ActionEvent event) {
@@ -88,18 +120,18 @@ public class BookLibController implements Initializable {
 
     public void handleEditBook(ActionEvent event) {
         BookFx bookFx = null;
-        DIALOG_TITLE = "";
+        String DIALOG_TITLE = "";
         DialogMode mode = null;
-        if (event.getSource().equals(addButton)){
+        if (event.getSource().equals(addButton)) {
             mode = DialogMode.ADD;
             DIALOG_TITLE = "ADD BOOK";
             bookFx = new BookFx();
-        } else if (event.getSource().equals(editButton)){
+        } else if (event.getSource().equals(editButton)) {
             mode = DialogMode.EDIT;
             DIALOG_TITLE = "EDIT BOOK";
             bookFx = bookTable.getSelectionModel().getSelectedItem();
         }
-        dialogUtils.showDialog(bookFx,DIALOG_TITLE, mode, this.bookFxObservableList);
+        dialogUtils.showDialog(bookFx, DIALOG_TITLE, mode, this.bookFxObservableList);
         if (mode == DialogMode.ADD) {
             BookDao bookDao = new BookDao();
             bookFx = BookConverter.convertToBookFx(bookDao.getLastEntry());

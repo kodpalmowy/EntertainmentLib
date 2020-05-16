@@ -32,7 +32,7 @@ public class BookController {
     public BookModel bookModel;
     private BookFx bookFx;
 
-    private final ObservableList<String> bookGenres = FXCollections.observableArrayList("Drama","Fairytale","Poetry","Satire","Review","Religion","Autobiography","Diary",
+    public final ObservableList<String> bookGenres = FXCollections.observableArrayList("Drama","Fairytale","Poetry","Satire","Review","Religion","Autobiography","Diary",
             "True Crime","Fantasy","Adventure","Romance","Contemporary","Dystopian","Mystery",
             "Horror","Thriller","Paranormal","Historical fiction", "Science fiction","Memoir",
             "Cooking","Art","Self-help","Development","Motivational","Health","History","Travel",

@@ -6,19 +6,9 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      styleClass="vbox" stylesheets="@../css/mainMenu_stylesheet.css"
-      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.kodpalmowy.controllers.MenuButtonsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="vbox" stylesheets="@../css/mainMenu_stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kodpalmowy.controllers.MenuButtonsController">
    <children>
-      <ToggleButton mnemonicParsing="false" onAction="#openUsers" prefHeight="90.0" prefWidth="120.0"
-                    styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css" text="%usersButton">
-         <toggleGroup>
-            <ToggleGroup fx:id="menuToggleGroup1" />
-         </toggleGroup>
-      </ToggleButton>
-      <ToggleButton mnemonicParsing="false" onAction="#openBookLib" prefHeight="90.0" prefWidth="120.0"
-                    styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css" text="%bookListButton">
+      <ToggleButton mnemonicParsing="false" onAction="#openBookLib" prefHeight="90.0" prefWidth="120.0" styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css" text="%bookListButton">
          <toggleGroup>
             <ToggleGroup fx:id="menuToggleGroup" />
          </toggleGroup>
@@ -26,29 +16,22 @@
             <Insets bottom="5.0" />
          </VBox.margin>
       </ToggleButton>
-      <ToggleButton mnemonicParsing="false" onAction="#openMovieLib" prefHeight="90.0" prefWidth="120.0"
-                    styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css"
-                    text="%movieListButton" toggleGroup="$menuToggleGroup">
+      <ToggleButton mnemonicParsing="false" onAction="#openMovieLib" prefHeight="90.0" prefWidth="120.0" styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css" text="%movieListButton" toggleGroup="$menuToggleGroup">
          <VBox.margin>
             <Insets bottom="5.0" />
          </VBox.margin>
       </ToggleButton>
-      <ToggleButton mnemonicParsing="false" onAction="#openGameLib" prefHeight="90.0" prefWidth="120.0"
-                    styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css"
-                    text="%gamesListButton" toggleGroup="$menuToggleGroup">
+      <ToggleButton mnemonicParsing="false" onAction="#openGameLib" prefHeight="90.0" prefWidth="120.0" styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css" text="%gamesListButton" toggleGroup="$menuToggleGroup">
          <VBox.margin>
             <Insets bottom="5.0" />
          </VBox.margin>
       </ToggleButton>
-      <ToggleButton mnemonicParsing="false" onAction="#openOptions" prefHeight="90.0" prefWidth="120.0"
-                    styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css"
-                    text="%optionsButton" toggleGroup="$menuToggleGroup">
+      <ToggleButton mnemonicParsing="false" onAction="#openOptions" prefHeight="90.0" prefWidth="120.0" styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css" text="%optionsButton" toggleGroup="$menuToggleGroup">
          <VBox.margin>
             <Insets bottom="5.0" />
          </VBox.margin>
       </ToggleButton>
-      <Button mnemonicParsing="false" onAction="#handleExit" prefHeight="90.0" prefWidth="120.0"
-              styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css" text="%exitButton">
+      <Button mnemonicParsing="false" onAction="#handleExit" prefHeight="90.0" prefWidth="120.0" styleClass="button1" stylesheets="@../css/mainMenu_stylesheet.css" text="%exitButton">
          <VBox.margin>
             <Insets />
          </VBox.margin>
