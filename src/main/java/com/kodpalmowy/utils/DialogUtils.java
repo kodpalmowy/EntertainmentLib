@@ -18,12 +18,14 @@ public class DialogUtils {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/bookDialog.fxml"));
             DialogPane addBookDialog = loader.load();
+
             BookController bookController = loader.getController();
+            bookController.setDefaultValues();
             bookController.setBook(bookFx);
+
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(addBookDialog);
             dialog.setTitle(dialogTitle);
-            bookController.setDefaultValues();
             Optional<ButtonType> result = dialog.showAndWait();
             if (result.orElse(null) == ButtonType.OK){
                 if (mode == BookLibController.DialogMode.ADD){

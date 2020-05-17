@@ -9,8 +9,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-import java.time.LocalDate;
-
 public class BookController {
     @FXML
     private TextField titleArea;
@@ -47,8 +45,6 @@ public class BookController {
     public void setDefaultValues(){
         genrePick.setItems(bookGenres);
         ratingPick.setItems(bookRatings);
-        ratingPick.setValue(1);
-        datePick.setValue(LocalDate.now());
     }
 
     public void setBook(BookFx bookFx){

@@ -16,8 +16,8 @@ public class BookFx {
     private SimpleStringProperty description = new SimpleStringProperty();
     private SimpleStringProperty ISBN = new SimpleStringProperty();
     private SimpleStringProperty publisher = new SimpleStringProperty();
-    private SimpleIntegerProperty rating = new SimpleIntegerProperty();
-    private ObjectProperty<LocalDate> readDate = new SimpleObjectProperty<>();
+    private SimpleIntegerProperty rating = new SimpleIntegerProperty(1);
+    private ObjectProperty<LocalDate> readDate = new SimpleObjectProperty<>(LocalDate.now());
 
     public int getBookId() {
         return bookId.get();
