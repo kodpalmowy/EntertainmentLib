@@ -36,9 +36,9 @@ public class FilterController {
             public DateCell call(final DatePicker datePicker) {
                 return new DateCell() {
                     @Override
-                    public void updateItem(LocalDate item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item.isBefore(dateAfter.getValue().plusDays(1))) {
+                    public void updateItem(LocalDate localDate, boolean empty) {
+                        super.updateItem(localDate, empty);
+                        if (localDate.isBefore(dateAfter.getValue().plusDays(1))) {
                             setDisable(true);
                             setStyle("-fx-background-color: #4E5F73");
                         }
@@ -62,12 +62,28 @@ public class FilterController {
         return searchTextField;
     }
 
+    public ComboBox<String> getGenreComboBox() {
+        return genreComboBox;
+    }
+
+    public DatePicker getDateAfter() {
+        return dateAfter;
+    }
+
+    public DatePicker getDateBefore() {
+        return dateBefore;
+    }
+
+    public Slider getRateSlider() {
+        return rateSlider;
+    }
+
     @FXML
     public void clearFields() {
         searchTextField.clear();
         genreComboBox.setValue(null);
         rateSlider.setValue(1);
-        dateAfter.setValue(null);
         dateBefore.setValue(null);
+        dateAfter.setValue(null);
     }
 }

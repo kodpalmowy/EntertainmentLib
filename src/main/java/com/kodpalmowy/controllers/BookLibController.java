@@ -64,21 +64,74 @@ public class BookLibController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         disableButton(deleteButton, bookTable);
         disableButton(editButton,bookTable);
+
         BookDao bookDao = new BookDao();
         List<Book> bookList = bookDao.queryBooks();
         obListAddAll(bookList);
+
         FilteredList<BookFx> filteredList = new FilteredList<>(bookFxObservableList, value -> true);
         filterController.setBookLibController(this);
         TextField searchField = filterController.getSearchTextField();
+        ComboBox<String> genreComboBox = filterController.getGenreComboBox();
+        DatePicker dateAfter = filterController.getDateAfter();
+        DatePicker dateBefore = filterController.getDateBefore();
+        Slider rateSlider = filterController.getRateSlider();
+
         searchListener(filteredList, searchField);
+        genreListener(filteredList, genreComboBox);
+        dateListener(filteredList, dateAfter, dateBefore);
+        rateListener(filteredList,rateSlider);
+
         SortedList<BookFx> sortedList = new SortedList<>(filteredList);
         sortedList.comparatorProperty().bind(bookTable.comparatorProperty());
         column_SetCellValueFactory();
         bookTable.setItems(sortedList);
     }
 
-    private void disableButton(Button button, TableView<BookFx> tableView){
-        button.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
+    private void rateListener(FilteredList<BookFx> filteredList, Slider rateSlider) {
+        rateSlider.valueProperty().addListener((obList, oldRate, newRate) ->
+                filteredList.setPredicate(bookFx -> {
+                    if (newRate.equals(1)){
+                        return true;
+                    }
+                    return bookFx.getRating() >= newRate.intValue();
+                }));
+    }
+
+    private void dateListener(FilteredList<BookFx> filteredList, DatePicker dateAfter, DatePicker dateBefore) {
+        dateAfter.valueProperty().addListener((obList, oldDate, newDate) ->
+                filteredList.setPredicate(bookFx -> {
+                    if (newDate == null){
+                        return true;
+                    }
+                    return bookFx.getReadDate().isAfter(newDate);
+                }));
+        dateBefore.valueProperty().addListener((obList, oldDate, newDate) ->
+                filteredList.setPredicate(bookFx -> {
+                    if (newDate == null){
+                        return true;
+                    }
+                    return bookFx.getReadDate().isBefore(newDate);
+                }));
+//        filteredList.predicateProperty().bind(Bindings.createObjectBinding(() -> {
+//            LocalDate minDate = dateAfter.getValue();
+//            LocalDate maxDate = dateBefore.getValue();
+//
+//            final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
+//            final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
+//
+//            return bookFx -> !finalMin.isAfter(bookFx.getReadDate()) && !finalMax.isBefore(bookFx.getReadDate());
+//        }, dateAfter.valueProperty(), dateBefore.valueProperty()));
+    }
+
+    private void genreListener(FilteredList<BookFx> filteredList, ComboBox<String> genreComboBox) {
+        genreComboBox.valueProperty().addListener((obList, oldValue, newValue) ->
+                filteredList.setPredicate(bookFx -> {
+                    if (newValue == null || newValue.isEmpty()){
+                        return true;
+                    }
+                    return bookFx.getGenre().equals(newValue);
+                }));
     }
 
     private void searchListener(FilteredList<BookFx> filteredList, TextField searchField) {
@@ -94,6 +147,10 @@ public class BookLibController implements Initializable {
                         return true;
                     } else return bookFx.getDescription().toLowerCase().contains(lowerCase);
                 }));
+    }
+
+    private void disableButton(Button button, TableView<BookFx> tableView){
+        button.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
     }
 
     private void obListAddAll(List<Book> bookList) {
@@ -131,8 +188,8 @@ public class BookLibController implements Initializable {
             DIALOG_TITLE = "EDIT BOOK";
             bookFx = bookTable.getSelectionModel().getSelectedItem();
         }
-        dialogUtils.showDialog(bookFx, DIALOG_TITLE, mode, this.bookFxObservableList);
-        if (mode == DialogMode.ADD) {
+        Boolean check = dialogUtils.showDialog(bookFx, DIALOG_TITLE, mode, this.bookFxObservableList);
+        if (mode == DialogMode.ADD && check) {
             BookDao bookDao = new BookDao();
             bookFx = BookConverter.convertToBookFx(bookDao.getLastEntry());
             bookFxObservableList.add(bookFx);

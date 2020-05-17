@@ -20,7 +20,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         Locale.setDefault(new Locale("en"));
         ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles.language");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/mainBorderPane.fxml"),resourceBundle);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/mainBorderPane.fxml"), resourceBundle);
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent);
         stage.setScene(scene);

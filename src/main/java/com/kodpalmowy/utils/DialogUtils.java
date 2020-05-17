@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class DialogUtils {
 
-    public void showDialog(BookFx bookFx, String dialogTitle, BookLibController.DialogMode mode, ObservableList<BookFx> list){
+    public Boolean showDialog(BookFx bookFx, String dialogTitle, BookLibController.DialogMode mode, ObservableList<BookFx> list){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/bookDialog.fxml"));
@@ -28,14 +28,17 @@ public class DialogUtils {
             if (result.orElse(null) == ButtonType.OK){
                 if (mode == BookLibController.DialogMode.ADD){
                     bookController.bookModel.saveBookInDB(bookFx);
+                    return true;
                 } else if (mode == BookLibController.DialogMode.EDIT){
                     bookController.bookModel.updateBookInDB(bookFx);
+                    return true;
                 }
             }
         } catch (IOException | NoSuchElementException ioe){
             System.out.println("Exception (ADD BOOK) : " + ioe.getMessage());
             ioe.printStackTrace();
         }
+        return false;
     }
 
     public Optional<ButtonType> showAlertDialog(String title, String header, String content){
