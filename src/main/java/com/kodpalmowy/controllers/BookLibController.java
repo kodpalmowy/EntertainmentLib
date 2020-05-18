@@ -1,6 +1,6 @@
 package com.kodpalmowy.controllers;
 
-import com.kodpalmowy.database.dao.BookDao;
+import com.kodpalmowy.database.dataAccessObject.BookDao;
 import com.kodpalmowy.database.models.Book;
 import com.kodpalmowy.models.BookFx;
 import com.kodpalmowy.utils.DialogUtils;
@@ -63,7 +63,7 @@ public class BookLibController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         disableButton(deleteButton, bookTable);
-        disableButton(editButton,bookTable);
+        disableButton(editButton, bookTable);
 
         BookDao bookDao = new BookDao();
         List<Book> bookList = bookDao.queryBooks();
@@ -80,7 +80,7 @@ public class BookLibController implements Initializable {
         searchListener(filteredList, searchField);
         genreListener(filteredList, genreComboBox);
         dateListener(filteredList, dateAfter, dateBefore);
-        rateListener(filteredList,rateSlider);
+        rateListener(filteredList, rateSlider);
 
         SortedList<BookFx> sortedList = new SortedList<>(filteredList);
         sortedList.comparatorProperty().bind(bookTable.comparatorProperty());
@@ -91,7 +91,7 @@ public class BookLibController implements Initializable {
     private void rateListener(FilteredList<BookFx> filteredList, Slider rateSlider) {
         rateSlider.valueProperty().addListener((obList, oldRate, newRate) ->
                 filteredList.setPredicate(bookFx -> {
-                    if (newRate.equals(1)){
+                    if (newRate.equals(1)) {
                         return true;
                     }
                     return bookFx.getRating() >= newRate.intValue();
@@ -101,14 +101,14 @@ public class BookLibController implements Initializable {
     private void dateListener(FilteredList<BookFx> filteredList, DatePicker dateAfter, DatePicker dateBefore) {
         dateAfter.valueProperty().addListener((obList, oldDate, newDate) ->
                 filteredList.setPredicate(bookFx -> {
-                    if (newDate == null){
+                    if (newDate == null) {
                         return true;
                     }
                     return bookFx.getReadDate().isAfter(newDate);
                 }));
         dateBefore.valueProperty().addListener((obList, oldDate, newDate) ->
                 filteredList.setPredicate(bookFx -> {
-                    if (newDate == null){
+                    if (newDate == null) {
                         return true;
                     }
                     return bookFx.getReadDate().isBefore(newDate);
@@ -127,7 +127,7 @@ public class BookLibController implements Initializable {
     private void genreListener(FilteredList<BookFx> filteredList, ComboBox<String> genreComboBox) {
         genreComboBox.valueProperty().addListener((obList, oldValue, newValue) ->
                 filteredList.setPredicate(bookFx -> {
-                    if (newValue == null || newValue.isEmpty()){
+                    if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
                     return bookFx.getGenre().equals(newValue);
@@ -149,7 +149,7 @@ public class BookLibController implements Initializable {
                 }));
     }
 
-    private void disableButton(Button button, TableView<BookFx> tableView){
+    private void disableButton(Button button, TableView<BookFx> tableView) {
         button.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
     }
 
@@ -188,7 +188,7 @@ public class BookLibController implements Initializable {
             DIALOG_TITLE = "EDIT BOOK";
             bookFx = bookTable.getSelectionModel().getSelectedItem();
         }
-        Boolean check = dialogUtils.showDialog(bookFx, DIALOG_TITLE, mode, this.bookFxObservableList);
+        Boolean check = dialogUtils.showDialog(bookFx, DIALOG_TITLE, mode);
         if (mode == DialogMode.ADD && check) {
             BookDao bookDao = new BookDao();
             bookFx = BookConverter.convertToBookFx(bookDao.getLastEntry());

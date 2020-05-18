@@ -1,6 +1,6 @@
 package com.kodpalmowy.models;
 
-import com.kodpalmowy.database.dao.BookDao;
+import com.kodpalmowy.database.dataAccessObject.BookDao;
 import com.kodpalmowy.database.models.Book;
 import com.kodpalmowy.utils.converters.BookConverter;
 

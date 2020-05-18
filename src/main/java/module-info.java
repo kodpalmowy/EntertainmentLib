@@ -11,4 +11,5 @@ module com.kodpalmowy {
     exports com.kodpalmowy.database.utils;
     exports com.kodpalmowy.utils;
     exports com.kodpalmowy.database.models;
+    exports com.kodpalmowy.database.dataAccessObject;
 }
