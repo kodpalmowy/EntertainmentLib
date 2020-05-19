@@ -1,6 +1,6 @@
 package com.kodpalmowy.database.utils;
 
-import com.kodpalmowy.database.dao.Dao;
+import com.kodpalmowy.database.dataAccessObject.Dao;
 
 import java.sql.*;
 

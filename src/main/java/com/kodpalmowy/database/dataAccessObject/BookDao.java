@@ -1,4 +1,4 @@
-package com.kodpalmowy.database.dao;
+package com.kodpalmowy.database.dataAccessObject;
 
 import com.kodpalmowy.database.models.Book;
 import com.kodpalmowy.database.utils.ConnectionClass;
