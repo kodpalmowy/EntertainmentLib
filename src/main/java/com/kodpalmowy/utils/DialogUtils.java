@@ -3,6 +3,7 @@ package com.kodpalmowy.utils;
 import com.kodpalmowy.controllers.BookController;
 import com.kodpalmowy.controllers.BookLibController;
 import com.kodpalmowy.models.BookFx;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -10,15 +11,15 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class DialogUtils {
 
-    private BookFx temporaryBookFx = null;
+    private BookFx temporaryBookFx = new BookFx();
 
-    public Boolean showDialog(final BookFx bookFx, String dialogTitle, BookLibController.DialogMode mode){
+    public boolean showDialog(BookFx bookFx, String dialogTitle, BookLibController.DialogMode mode, ObservableList<BookFx> obList){
+
         try {
             ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles.language");
             FXMLLoader loader = new FXMLLoader();
@@ -29,40 +30,40 @@ public class DialogUtils {
             BookController bookController = loader.getController();
             bookController.setDefaultValues();
 
-            copyBookFx(bookFx);
+            copyBookFx(bookFx, temporaryBookFx);
             bookController.setBook(temporaryBookFx);
 
             Dialog<BookFx> dialog = new Dialog<>();
             dialog.setDialogPane(addBookDialog);
             dialog.setTitle(dialogTitle);
-            disableOkButton(bookFx, dialog);
+            disableOkButton(temporaryBookFx, dialog);
 
-            dialog.setResultConverter(button -> button == ButtonType.OK ? temporaryBookFx : bookFx);
-            dialog.showAndWait().ifPresent(book -> {
+            dialog.setResultConverter(button -> button == ButtonType.OK ? temporaryBookFx : null);
+            dialog.showAndWait().ifPresent(result -> {
+                copyBookFx(result,bookFx);
                 if (mode == BookLibController.DialogMode.ADD){
-                    bookController.bookModel.saveBookInDB(book);
+                    bookController.bookModel.saveBookInDB(bookFx);
+                    obList.add(bookFx);
                 } else if (mode == BookLibController.DialogMode.EDIT){
-                    bookController.bookModel.updateBookInDB(book);
+                    bookController.bookModel.updateBookInDB(bookFx);
                 }
             });
-//            if (result.get() == ButtonType.OK){
-//                if (mode == BookLibController.DialogMode.ADD){
-//                    bookController.bookModel.saveBookInDB(bookFx);
-//                    return true;
-//                } else if (mode == BookLibController.DialogMode.EDIT){
-//                    bookController.bookModel.updateBookInDB(bookFx);
-//                    return true;
-//                }
-//            }
-        } catch (IOException | NoSuchElementException ioe){
+        } catch (IOException ioe){
             System.out.println("Exception (showDialog) : " + ioe.getMessage());
             ioe.printStackTrace();
         }
         return false;
     }
 
-    private void copyBookFx(BookFx bookFx){
-        this.temporaryBookFx = bookFx;
+    private void copyBookFx(BookFx copied, BookFx copy){
+        copy.titleProperty().setValue(copied.getTitle());
+        copy.authorProperty().setValue(copied.getAuthor());
+        copy.genreProperty().setValue(copied.getGenre());
+        copy.descriptionProperty().setValue(copied.getDescription());
+        copy.publisherProperty().setValue(copied.getPublisher());
+        copy.ratingProperty().setValue(copied.getRating());
+        copy.readDateProperty().setValue(copied.getReadDate());
+        copy.ISBNProperty().setValue(copied.getISBN());
     }
 
     private void disableOkButton(BookFx bookFx, Dialog<BookFx> dialog) {
