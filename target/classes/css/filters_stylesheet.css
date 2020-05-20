@@ -1,25 +1,77 @@
+/*Text labels*/
 .labels {
     -fx-text-fill: #a5ffac;
 }
+/*Clear buttons*/
 .clearButton {
     -fx-background-radius: 30 30 30 30;
     -fx-background-color: #a5ffac;
     -fx-text-fill: #4E5F73;
 }
 .clearButton:hover{
-    -fx-background-radius: 30 30 30 30;
     -fx-background-color: #b2ffcc;
-    -fx-text-fill: #4E5F73;
 }
 .clearButton:pressed{
-    -fx-background-radius: 30 30 30 30;
     -fx-background-color: #6fdaa4;
-    -fx-text-fill: #4E5F73;
 }
-.check-box{
-    -fx-tick-label-fill: #a5ffac;
-    -fx-text-fill: #a5ffac;
-}
+/*Slider */
 .slider .axis{
     -fx-tick-label-fill: #a5ffac;
 }
+.slider .axis-tick-mark{
+    -fx-fill: #a5ffac;
+    -fx-stroke: #a5ffac;
+}
+.slider .thumb{
+    -fx-background-radius: 0 0 0 0;
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-color: #6fdaa4;
+    -fx-pref-width: 12;
+    -fx-pref-height: 12;
+    -fx-border-width: 1;
+    -fx-border-color: #4E5F73;
+}
+.slider .thumb:pressed{
+    -fx-background-color: #4E5F73;
+    -fx-border-color: #a5ffac;
+}
+
+.slider .track{
+    -fx-border-radius: 5 5 5 5;
+    -fx-border-color: #a5ffac;
+    -fx-control-inner-background: #6fdaa4;
+    -fx-pref-height: 5;
+}
+/*Date Picker*/
+.date-picker-popup > .month-year-pane{
+    -fx-background-color: #6fdaa4;
+}
+.date-picker-popup > .calendar-grid{
+    -fx-background-color: #6fdaa4;
+}
+.date-picker-popup > * > day-cell{
+    -fx-background-color: #a5ffac;
+}
+.date-picker-popup > * > .day-cell {
+    -fx-border-width: 0px;
+    -fx-font-size: 1em;
+    -fx-text-fill: #b2ffcc;
+    -fx-background-color: #4E5F73;
+}
+.date-picker-popup > * > .previous-month,
+.date-picker-popup > * > .next-month {
+    -fx-background-color: derive(#4E5F73,20%)
+}
+.date-picker-popup > * > .day-cell:hover,
+.date-picker-popup > * > .selected,
+.date-picker-popup > * > .previous-month.selected,
+.date-picker-popup > * > .next-month.selected {
+    -fx-background-color: #6fdaa4;
+    -fx-text-fill: #4E5F73;
+}
+.date-picker-popup > * > .today:hover,
+.date-picker-popup > * > .today.selected {
+    -fx-background-color: derive(#6fdaa4, 50%);
+    -fx-text-fill: #4E5F73;
+}
+

@@ -4,14 +4,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class FilterController {
+
     @FXML
-    private CheckBox genreCheckBox;
+    private Button clearAllFieldsButton;
     @FXML
-    private CheckBox rateCheckBox;
+    private Button clearSearchButton;
     @FXML
-    private CheckBox readAfterCheckBox;
+    private Button clearGenreButton;
     @FXML
-    private CheckBox readBeforeCheckBox;
+    private Button clearRateButton;
+    @FXML
+    private Button clearDateAfterButton;
+    @FXML
+    private Button clearDateBeforeButton;
     @FXML
     private TextField searchTextField;
     @FXML
@@ -28,6 +33,8 @@ public class FilterController {
     @FXML
     public void initialize(){
         setGenreComboBox();
+        setVisibleClearButtons();
+        enableAllFieldsButton();
 //        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<>() {
 //            @Override
 //            public DateCell call(final DatePicker datePicker) {
@@ -44,6 +51,22 @@ public class FilterController {
 //            }
 //        };
 //        dateBefore.setDayCellFactory(dayCellFactory);
+    }
+
+    private void enableAllFieldsButton() {
+        clearAllFieldsButton.disableProperty().bind(searchTextField.textProperty().isEmpty()
+                .and(genreComboBox.valueProperty().isNull())
+                .and(rateSlider.valueProperty().isEqualTo(1))
+                .and(dateAfter.valueProperty().isNull()
+                .and(dateBefore.valueProperty().isNull())));
+    }
+
+    private void setVisibleClearButtons(){
+        clearSearchButton.visibleProperty().bind(searchTextField.textProperty().isNotEmpty());
+        clearGenreButton.visibleProperty().bind(genreComboBox.valueProperty().isNotNull());
+        clearRateButton.visibleProperty().bind(rateSlider.valueProperty().isNotEqualTo(1));
+        clearDateAfterButton.visibleProperty().bind(dateAfter.valueProperty().isNotNull());
+        clearDateBeforeButton.visibleProperty().bind(dateBefore.valueProperty().isNotNull());
     }
 
     private void setGenreComboBox(){
@@ -76,11 +99,31 @@ public class FilterController {
     }
 
     @FXML
-    public void clearFields() {
+    public void clearAllFields() {
         searchTextField.clear();
         genreComboBox.setValue(null);
         rateSlider.setValue(1);
         dateBefore.setValue(null);
         dateAfter.setValue(null);
+    }
+    @FXML
+    public void clearSearch() {
+        searchTextField.clear();
+    }
+    @FXML
+    public void clearGenre() {
+        genreComboBox.setValue(null);
+    }
+    @FXML
+    public void clearRate() {
+        rateSlider.setValue(1);
+    }
+    @FXML
+    public void clearDateAfter() {
+        dateAfter.setValue(null);
+    }
+    @FXML
+    public void clearDateBefore() {
+        dateBefore.setValue(null);
     }
 }
