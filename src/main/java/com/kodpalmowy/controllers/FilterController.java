@@ -2,9 +2,6 @@ package com.kodpalmowy.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.util.Callback;
-
-import java.time.LocalDate;
 
 public class FilterController {
     @FXML
@@ -31,22 +28,22 @@ public class FilterController {
     @FXML
     public void initialize(){
         setGenreComboBox();
-        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<>() {
-            @Override
-            public DateCell call(final DatePicker datePicker) {
-                return new DateCell() {
-                    @Override
-                    public void updateItem(LocalDate localDate, boolean empty) {
-                        super.updateItem(localDate, empty);
-                        if (localDate.isBefore(dateAfter.getValue().plusDays(1))) {
-                            setDisable(true);
-                            setStyle("-fx-background-color: #4E5F73");
-                        }
-                    }
-                };
-            }
-        };
-        dateBefore.setDayCellFactory(dayCellFactory);
+//        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<>() {
+//            @Override
+//            public DateCell call(final DatePicker datePicker) {
+//                return new DateCell() {
+//                    @Override
+//                    public void updateItem(LocalDate localDate, boolean empty) {
+//                        super.updateItem(localDate, empty);
+//                        if (localDate.isBefore(dateAfter.getValue().plusDays(1))) {
+//                            setDisable(true);
+//                            setStyle("-fx-background-color: #4E5F73");
+//                        }
+//                    }
+//                };
+//            }
+//        };
+//        dateBefore.setDayCellFactory(dayCellFactory);
     }
 
     private void setGenreComboBox(){

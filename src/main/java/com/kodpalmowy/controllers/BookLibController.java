@@ -99,6 +99,8 @@ public class BookLibController implements Initializable {
     }
 
     private void dateListener(FilteredList<BookFx> filteredList, DatePicker dateAfter, DatePicker dateBefore) {
+        dateAfter.disableProperty().bind(dateBefore.valueProperty().isNotNull());
+        dateBefore.disableProperty().bind(dateAfter.valueProperty().isNotNull());
         dateAfter.valueProperty().addListener((obList, oldDate, newDate) ->
                 filteredList.setPredicate(bookFx -> {
                     if (newDate == null) {
@@ -188,12 +190,7 @@ public class BookLibController implements Initializable {
             DIALOG_TITLE = "EDIT BOOK";
             bookFx = bookTable.getSelectionModel().getSelectedItem();
         }
-        Boolean check = dialogUtils.showDialog(bookFx, DIALOG_TITLE, mode);
-        if (mode == DialogMode.ADD && check) {
-            BookDao bookDao = new BookDao();
-            bookFx = BookConverter.convertToBookFx(bookDao.getLastEntry());
-            bookFxObservableList.add(bookFx);
-        }
+        dialogUtils.showDialog(bookFx, DIALOG_TITLE, mode, bookFxObservableList);
     }
 
     public void handleDelete() {
