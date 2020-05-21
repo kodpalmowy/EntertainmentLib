@@ -1,0 +1,15 @@
+/*Labels*/
+.labelText{
+    -fx-text-fill: #6fdaa4;
+}
+/*Dialog pane window*/
+.dialog-pane{
+    -fx-background-color: #6E7E8A;
+    -fx-border-radius: 30 30 30 30;
+    -fx-background-radius: 30 30 30 30;
+    -fx-border-width: 3px;
+    -fx-border-color: #6fdaa4;
+}
+.dialog-pane .button-type{
+    -fx-background-color: #6fdaa4;
+}

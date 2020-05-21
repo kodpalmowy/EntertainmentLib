@@ -9,6 +9,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -18,6 +21,9 @@ public class DialogUtils {
 
     private BookFx temporaryBookFx = new BookFx();
 
+    private static double xOffset = 0.0;
+    private static double yOffset = 0.0;
+
     public boolean showDialog(BookFx bookFx, String dialogTitle, BookLibController.DialogMode mode, ObservableList<BookFx> obList){
 
         try {
@@ -26,7 +32,6 @@ public class DialogUtils {
             loader.setLocation(getClass().getResource("/fxml/bookDialog.fxml"));
             loader.setResources(resourceBundle);
             DialogPane addBookDialog = loader.load();
-
             BookController bookController = loader.getController();
             bookController.setDefaultValues();
 
@@ -37,7 +42,7 @@ public class DialogUtils {
             dialog.setDialogPane(addBookDialog);
             dialog.setTitle(dialogTitle);
             disableOkButton(temporaryBookFx, dialog);
-
+            setWindowStyles(addBookDialog);
             dialog.setResultConverter(button -> button == ButtonType.OK ? temporaryBookFx : null);
             dialog.showAndWait().ifPresent(result -> {
                 copyBookFx(result,bookFx);
@@ -53,6 +58,24 @@ public class DialogUtils {
             ioe.printStackTrace();
         }
         return false;
+    }
+
+    private void setWindowStyles(DialogPane dialogPane){
+        Stage stage = (Stage) dialogPane.getScene().getWindow();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        dialogPane.getScene().setFill(Color.TRANSPARENT);
+
+
+        dialogPane.setOnMousePressed(mouseEvent -> {
+            xOffset = stage.getX() - mouseEvent.getScreenX();
+            yOffset = stage.getY() - mouseEvent.getScreenY();
+        });
+        dialogPane.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() + xOffset);
+            stage.setY(mouseEvent.getScreenY() + yOffset);
+        });
+
     }
 
     private void copyBookFx(BookFx copied, BookFx copy){

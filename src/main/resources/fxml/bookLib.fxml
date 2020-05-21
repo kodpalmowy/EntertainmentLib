@@ -36,7 +36,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="bookTable" layoutX="14.0" layoutY="14.0" prefHeight="490.0" prefWidth="960.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
+            <TableView fx:id="bookTable" layoutX="14.0" layoutY="14.0" prefHeight="490.0" prefWidth="960.0" stylesheets="@../css/bookLib_sylesheet.css" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
               <columns>
                   <TableColumn fx:id="col_bookTitle" editable="false" minWidth="135.0" prefWidth="135.0" reorderable="false" text="%bookTitle" />
                   <TableColumn fx:id="col_bookAuthor" editable="false" minWidth="120.0" prefWidth="120.0" reorderable="false" text="%bookAuthor" />
