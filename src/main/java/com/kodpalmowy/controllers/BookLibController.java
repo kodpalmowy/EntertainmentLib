@@ -53,6 +53,9 @@ public class BookLibController implements Initializable {
     private final ObservableList<BookFx> bookFxObservableList = FXCollections.observableArrayList();
     private final DialogUtils dialogUtils = new DialogUtils();
 
+    private FilteredList<BookFx> filteredList = new FilteredList<>(bookFxObservableList,value -> true);
+    private SortedList<BookFx> sortedList = new SortedList<>(filteredList);
+
     public enum DialogMode {
         ADD, EDIT
     }
@@ -69,26 +72,27 @@ public class BookLibController implements Initializable {
         List<Book> bookList = bookDao.queryBooks();
         obListAddAll(bookList);
 
-        FilteredList<BookFx> filteredList = new FilteredList<>(bookFxObservableList, value -> true);
         filterController.setBookLibController(this);
+
         TextField searchField = filterController.getSearchTextField();
         ComboBox<String> genreComboBox = filterController.getGenreComboBox();
         DatePicker dateAfter = filterController.getDateAfter();
         DatePicker dateBefore = filterController.getDateBefore();
         Slider rateSlider = filterController.getRateSlider();
 
-        searchListener(filteredList, searchField);
-        genreListener(filteredList, genreComboBox);
-        dateListener(filteredList, dateAfter, dateBefore);
-        rateListener(filteredList, rateSlider);
+//        filterList(searchField,genreComboBox,dateAfter,dateBefore,rateSlider);
 
-        SortedList<BookFx> sortedList = new SortedList<>(filteredList);
+        searchListener(searchField);
+        genreListener(genreComboBox);
+        dateListener(dateAfter, dateBefore);
+        rateListener(rateSlider);
+
         sortedList.comparatorProperty().bind(bookTable.comparatorProperty());
         column_SetCellValueFactory();
         bookTable.setItems(sortedList);
     }
 
-    private void rateListener(FilteredList<BookFx> filteredList, Slider rateSlider) {
+    private void rateListener(Slider rateSlider) {
         rateSlider.valueProperty().addListener((obList, oldRate, newRate) ->
                 filteredList.setPredicate(bookFx -> {
                     if (newRate.equals(1)) {
@@ -98,7 +102,26 @@ public class BookLibController implements Initializable {
                 }));
     }
 
-    private void dateListener(FilteredList<BookFx> filteredList, DatePicker dateAfter, DatePicker dateBefore) {
+//    private void filterList(TextField searchField, ComboBox<String> genreBox, DatePicker dateAfter, DatePicker dateBefore, Slider rateSlider){
+//        LocalDate minDate = dateAfter.getValue();
+//        LocalDate maxDate = dateBefore.getValue();
+//
+//        final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
+//        final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
+//        filteredList.predicateProperty().bind(Bindings.createObjectBinding(() ->
+//            book -> book.getTitle().toLowerCase().contains(searchField.getText().toLowerCase()) ||
+//                    book.getAuthor().toLowerCase().contains(searchField.getText().toLowerCase()) ||
+//                    book.getDescription().toLowerCase().contains(searchField.getText().toLowerCase()) ||
+//                    book.getGenre().equals(genreBox.getValue()) &&
+//                    book.getRating() >= rateSlider.getValue() ||
+//                    book.getReadDate().isAfter(finalMin) ||
+//                    book.getReadDate().isBefore(finalMax)
+//            ,
+//        dateAfter.valueProperty(), dateBefore.valueProperty(), searchField.textProperty(), genreBox.valueProperty(), rateSlider.valueProperty()));
+//
+//    }
+
+    private void dateListener(DatePicker dateAfter, DatePicker dateBefore) {
         dateAfter.disableProperty().bind(dateBefore.valueProperty().isNotNull());
         dateBefore.disableProperty().bind(dateAfter.valueProperty().isNotNull());
         dateAfter.valueProperty().addListener((obList, oldDate, newDate) ->
@@ -126,7 +149,7 @@ public class BookLibController implements Initializable {
 //        }, dateAfter.valueProperty(), dateBefore.valueProperty()));
     }
 
-    private void genreListener(FilteredList<BookFx> filteredList, ComboBox<String> genreComboBox) {
+    private void genreListener(ComboBox<String> genreComboBox) {
         genreComboBox.valueProperty().addListener((obList, oldValue, newValue) ->
                 filteredList.setPredicate(bookFx -> {
                     if (newValue == null || newValue.isEmpty()) {
@@ -136,7 +159,7 @@ public class BookLibController implements Initializable {
                 }));
     }
 
-    private void searchListener(FilteredList<BookFx> filteredList, TextField searchField) {
+    private void searchListener(TextField searchField) {
         searchField.textProperty().addListener((obList, oldValue, newValue) ->
                 filteredList.setPredicate(bookFx -> {
                     if (newValue == null || newValue.isEmpty()) {
@@ -196,10 +219,9 @@ public class BookLibController implements Initializable {
     public void handleDelete() {
         BookFx bookFx = bookTable.getSelectionModel().getSelectedItem();
         int bookIdToDelete = bookFx.getBookId();
-        String ALERT_TITLE = "Delete Book";
         String ALERT_HEADER = "Are you sure you want to delete:";
         String ALERT_CONTENT = bookFx.getTitle() + " : " + bookFx.getAuthor();
-        Optional<ButtonType> alertResult = dialogUtils.showAlertDialog(ALERT_TITLE, ALERT_HEADER, ALERT_CONTENT);
+        Optional<ButtonType> alertResult = dialogUtils.showAlertDialog(ALERT_HEADER, ALERT_CONTENT);
         if (alertResult.orElse(null) == ButtonType.OK) {
             BookDao bookDao = new BookDao();
             bookDao.deleteBook(bookIdToDelete);

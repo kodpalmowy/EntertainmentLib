@@ -1,14 +1,12 @@
 .table-view {
     -fx-border-color: #4E5F73;
     -fx-background-color: #4E5F73;
-    -fx-text-fill: #a5ffac;
 }
 .table-view .arrow {
     -fx-mark-color: #4E5F73;
 }
 .table-view .column-header{
     -fx-background-color: derive(#6fdaa4, 10%);
-    -fx-text-fill: #4E5F73;
     -fx-padding: 0 0 0 -20;
 }
 .table-row-cell{
@@ -18,5 +16,14 @@
     -fx-border-width: 0.3;
 }
 .table-row-cell:odd{
-    -fx-background-color: derive(#6E7E8A, 5%)
+    -fx-background-color: derive(#6E7E8A, 5%);
+}
+.table-row-cell:selected{
+    -fx-background-color: derive(#6fdaa4, 40%);
+}
+.table-row-cell .table-cell{
+    -fx-text-fill: derive(#6fdaa4, 10%)
+}
+.table-row-cell:selected .table-cell{
+    -fx-text-fill: #4E5F73;
 }

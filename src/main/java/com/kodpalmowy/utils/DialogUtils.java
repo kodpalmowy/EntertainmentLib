@@ -24,7 +24,7 @@ public class DialogUtils {
     private static double xOffset = 0.0;
     private static double yOffset = 0.0;
 
-    public boolean showDialog(BookFx bookFx, String dialogTitle, BookLibController.DialogMode mode, ObservableList<BookFx> obList){
+    public void showDialog(BookFx bookFx, String dialogTitle, BookLibController.DialogMode mode, ObservableList<BookFx> obList){
 
         try {
             ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles.language");
@@ -57,7 +57,6 @@ public class DialogUtils {
             System.out.println("Exception (showDialog) : " + ioe.getMessage());
             ioe.printStackTrace();
         }
-        return false;
     }
 
     private void setWindowStyles(DialogPane dialogPane){
@@ -100,9 +99,14 @@ public class DialogUtils {
                               .or(bookFx.readDateProperty().isNull())))));
     }
 
-    public Optional<ButtonType> showAlertDialog(String title, String header, String content){
+    public Optional<ButtonType> showAlertDialog(String header, String content){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
+        DialogPane alertDialogPane = alert.getDialogPane();
+        alertDialogPane.getStylesheets()
+                .add(getClass().getResource("/css/dialog_stylesheet.css")
+                        .toExternalForm());
+        alertDialogPane.getStyleClass().add("dialog-pane");
+        setWindowStyles(alertDialogPane);
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.setGraphic(null);
