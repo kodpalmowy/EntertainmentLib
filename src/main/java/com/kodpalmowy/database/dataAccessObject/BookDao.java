@@ -72,22 +72,6 @@ public class BookDao extends Dao {
         }
     }
 
-    public Book getLastEntry() {
-        String SQL_SELECT_LAST_QUERY = "SELECT * FROM bookList ORDER BY bookId DESC LIMIT 1";
-        Book book = new Book();
-        try (Connection connection = ConnectionClass.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(SQL_SELECT_LAST_QUERY)) {
-            while (resultSet.next()) {
-                setResultToBook(book, resultSet);
-            }
-        } catch (SQLException sqle) {
-            System.out.println("SQLException(LAST ENTRY) : " + sqle.getMessage());
-            // change this later to logger
-        }
-        return book;
-    }
-
     private void setResultToBook(Book book, ResultSet resultSet) {
         try {
             book.setBookId(resultSet.getInt("bookId"));

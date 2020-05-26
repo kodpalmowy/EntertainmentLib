@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
 
-public class BookFx implements Cloneable {
+public class BookFx {
 
     private SimpleIntegerProperty bookId = new SimpleIntegerProperty();
     private SimpleStringProperty title = new SimpleStringProperty();
