@@ -5,6 +5,7 @@ import com.kodpalmowy.database.models.Book;
 import com.kodpalmowy.models.BookFx;
 import com.kodpalmowy.utils.DialogUtils;
 import com.kodpalmowy.utils.converters.BookConverter;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -16,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -80,98 +82,28 @@ public class BookLibController implements Initializable {
         DatePicker dateBefore = filterController.getDateBefore();
         Slider rateSlider = filterController.getRateSlider();
 
-//        filterList(searchField,genreComboBox,dateAfter,dateBefore,rateSlider);
-
-        searchListener(searchField);
-        genreListener(genreComboBox);
-        dateListener(dateAfter, dateBefore);
-        rateListener(rateSlider);
+        filterList(searchField,genreComboBox,dateAfter,dateBefore,rateSlider);
 
         sortedList.comparatorProperty().bind(bookTable.comparatorProperty());
         column_SetCellValueFactory();
         bookTable.setItems(sortedList);
     }
 
-    private void rateListener(Slider rateSlider) {
-        rateSlider.valueProperty().addListener((obList, oldRate, newRate) ->
-                filteredList.setPredicate(bookFx -> {
-                    if (newRate.equals(1)) {
-                        return true;
-                    }
-                    return bookFx.getRating() >= newRate.intValue();
-                }));
-    }
+    private void filterList(TextField searchField, ComboBox<String> genreBox, DatePicker dateAfter, DatePicker dateBefore, Slider rateSlider) {
+        filteredList.predicateProperty().bind(Bindings.createObjectBinding(() -> {
+            LocalDate minDate = dateAfter.getValue();
+            LocalDate maxDate = dateBefore.getValue();
 
-//    private void filterList(TextField searchField, ComboBox<String> genreBox, DatePicker dateAfter, DatePicker dateBefore, Slider rateSlider){
-//        LocalDate minDate = dateAfter.getValue();
-//        LocalDate maxDate = dateBefore.getValue();
-//
-//        final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
-//        final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
-//        filteredList.predicateProperty().bind(Bindings.createObjectBinding(() ->
-//            book -> book.getTitle().toLowerCase().contains(searchField.getText().toLowerCase()) ||
-//                    book.getAuthor().toLowerCase().contains(searchField.getText().toLowerCase()) ||
-//                    book.getDescription().toLowerCase().contains(searchField.getText().toLowerCase()) ||
-//                    book.getGenre().equals(genreBox.getValue()) &&
-//                    book.getRating() >= rateSlider.getValue() ||
-//                    book.getReadDate().isAfter(finalMin) ||
-//                    book.getReadDate().isBefore(finalMax)
-//            ,
-//        dateAfter.valueProperty(), dateBefore.valueProperty(), searchField.textProperty(), genreBox.valueProperty(), rateSlider.valueProperty()));
-//
-//    }
-
-    private void dateListener(DatePicker dateAfter, DatePicker dateBefore) {
-        dateAfter.disableProperty().bind(dateBefore.valueProperty().isNotNull());
-        dateBefore.disableProperty().bind(dateAfter.valueProperty().isNotNull());
-        dateAfter.valueProperty().addListener((obList, oldDate, newDate) ->
-                filteredList.setPredicate(bookFx -> {
-                    if (newDate == null) {
-                        return true;
-                    }
-                    return bookFx.getReadDate().isAfter(newDate);
-                }));
-        dateBefore.valueProperty().addListener((obList, oldDate, newDate) ->
-                filteredList.setPredicate(bookFx -> {
-                    if (newDate == null) {
-                        return true;
-                    }
-                    return bookFx.getReadDate().isBefore(newDate);
-                }));
-//        filteredList.predicateProperty().bind(Bindings.createObjectBinding(() -> {
-//            LocalDate minDate = dateAfter.getValue();
-//            LocalDate maxDate = dateBefore.getValue();
-//
-//            final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
-//            final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
-//
-//            return bookFx -> !finalMin.isAfter(bookFx.getReadDate()) && !finalMax.isBefore(bookFx.getReadDate());
-//        }, dateAfter.valueProperty(), dateBefore.valueProperty()));
-    }
-
-    private void genreListener(ComboBox<String> genreComboBox) {
-        genreComboBox.valueProperty().addListener((obList, oldValue, newValue) ->
-                filteredList.setPredicate(bookFx -> {
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-                    return bookFx.getGenre().equals(newValue);
-                }));
-    }
-
-    private void searchListener(TextField searchField) {
-        searchField.textProperty().addListener((obList, oldValue, newValue) ->
-                filteredList.setPredicate(bookFx -> {
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-                    String lowerCase = newValue.toLowerCase();
-                    if (bookFx.getTitle().toLowerCase().contains(lowerCase)) {
-                        return true;
-                    } else if (bookFx.getAuthor().toLowerCase().contains(lowerCase)) {
-                        return true;
-                    } else return bookFx.getDescription().toLowerCase().contains(lowerCase);
-                }));
+            final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
+            final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
+            return book -> (book.getTitle().toLowerCase().contains(searchField.getText().toLowerCase()) ||
+                    book.getAuthor().toLowerCase().contains(searchField.getText().toLowerCase()) ||
+                    book.getDescription().toLowerCase().contains(searchField.getText().toLowerCase())) &&
+                    (book.getGenre().equals(genreBox.getValue()) || genreBox.getValue() == null) &&
+                    book.getRating() >= rateSlider.getValue() &&
+                    (!finalMin.isAfter(book.getReadDate()) && !finalMax.isBefore(book.getReadDate()));
+                },
+                dateAfter.valueProperty(), dateBefore.valueProperty(), searchField.textProperty(), genreBox.valueProperty(), rateSlider.valueProperty()));
     }
 
     private void disableButton(Button button, TableView<BookFx> tableView) {
