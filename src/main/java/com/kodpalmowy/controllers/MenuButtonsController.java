@@ -9,7 +9,7 @@ public class MenuButtonsController {
     private final String BOOKS_LIB_FXML = "/fxml/bookLib.fxml";
     private final String GAMES_LIB_FXML = "/fxml/gamesLib.fxml";
     private final String MOVIES_LIB_FXML = "/fxml/movieLib.fxml";
-    private final String OPTIONS_LIB_FXML = "/fxml/options.fxml";
+    private final String SETTINGS_LIB_FXML = "/fxml/settings.fxml";
     @FXML
     private ToggleGroup menuToggleGroup;
     @FXML
@@ -31,8 +31,8 @@ public class MenuButtonsController {
     }
 
     @FXML
-    public void openOptions() {
-        mainController.setCenter(OPTIONS_LIB_FXML);
+    public void openSettings() {
+        mainController.setCenter(SETTINGS_LIB_FXML);
     }
 
     @FXML

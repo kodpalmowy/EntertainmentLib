@@ -1,25 +1,154 @@
+/*Text labels*/
 .labels {
     -fx-text-fill: #a5ffac;
 }
+/*Clear buttons*/
 .clearButton {
     -fx-background-radius: 30 30 30 30;
     -fx-background-color: #a5ffac;
     -fx-text-fill: #4E5F73;
 }
 .clearButton:hover{
-    -fx-background-radius: 30 30 30 30;
     -fx-background-color: #b2ffcc;
-    -fx-text-fill: #4E5F73;
 }
 .clearButton:pressed{
-    -fx-background-radius: 30 30 30 30;
+    -fx-background-color: #6fdaa4;
+}
+/*Slider */
+.slider .axis{
+    -fx-tick-label-fill: #a5ffac;
+}
+.slider .axis-tick-mark{
+    -fx-fill: #a5ffac;
+    -fx-stroke: #a5ffac;
+}
+.slider .thumb{
+    -fx-background-radius: 0 0 0 0;
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-color: #6fdaa4;
+    -fx-pref-width: 12;
+    -fx-pref-height: 12;
+    -fx-border-width: 1;
+    -fx-border-color: #4E5F73;
+}
+.slider .thumb:pressed{
+    -fx-background-color: #4E5F73;
+    -fx-border-color: #a5ffac;
+}
+
+.slider .track{
+    -fx-border-radius: 5 5 5 5;
+    -fx-border-color: #a5ffac;
+    -fx-control-inner-background: #6fdaa4;
+    -fx-pref-height: 5;
+}
+/*Date Picker*/
+.date-picker .text-field{
+    -fx-background-color: white;
+}
+.date-picker > .arrow-button > .arrow{
+    -fx-background-color: #6fdaa4;
+}
+.date-picker > .arrow-button:pressed > .arrow{
+    -fx-background-color: derive(#6fdaa4, 40%);
+}
+.date-picker-popup > * > .spinner > .button {
+
+    -fx-background-color: derive(#6fdaa4, 30%);
+    -fx-background-insets: 0;
+    -fx-color: #4E5F73;
+    -fx-background-radius: 10;
+}
+.date-picker-popup > * > .spinner > .button:pressed {
+    -fx-background-color: derive(#6fdaa4, 60%);
+}
+.date-picker-popup > .month-year-pane{
+    -fx-background-color: #6fdaa4;
+}
+.date-picker-popup > .calendar-grid{
+    -fx-background-color: #6fdaa4;
+}
+.date-picker-popup > * > day-cell{
+    -fx-background-color: #a5ffac;
+}
+.date-picker-popup > * > .day-cell {
+    -fx-border-width: 0px;
+    -fx-font-size: 1em;
+    -fx-text-fill: #b2ffcc;
+    -fx-background-color: #4E5F73;
+}
+.date-picker-popup > * > .previous-month,
+.date-picker-popup > * > .next-month {
+    -fx-background-color: derive(#4E5F73,20%)
+}
+.date-picker-popup > * > .day-cell:hover,
+.date-picker-popup > * > .selected,
+.date-picker-popup > * > .previous-month.selected,
+.date-picker-popup > * > .next-month.selected {
     -fx-background-color: #6fdaa4;
     -fx-text-fill: #4E5F73;
 }
-.check-box{
-    -fx-tick-label-fill: #a5ffac;
-    -fx-text-fill: #a5ffac;
+.date-picker-popup > * > .today:hover,
+.date-picker-popup > * > .today.selected {
+    -fx-background-color: derive(#6fdaa4, 50%);
+    -fx-text-fill: #4E5F73;
 }
-.slider .axis{
-    -fx-tick-label-fill: #a5ffac;
+/*Search text field*/
+.text-field {
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-radius: 0 ;
+    -fx-border-width: 0px 0px 3px 0px;
+    -fx-border-color: #6fdaa4;
+    -fx-text-fill: #4E5F73;
+}
+.text-field:focused {
+    -fx-background-color: -fx-focus-color, -fx-background ;
+}
+/*Genre combo box*/
+.combo-box > .list-cell {
+    -fx-background-color: white;
+    -fx-border-width: 0px 0px 3px 0px;
+    -fx-border-color: #6fdaa4;
+    -fx-text-fill: #4E5F73;
+}
+.combo-box-base > .arrow-button {
+    -fx-background-radius: 0;
+    -fx-border-width: 0px 0px 3px 0px;
+    -fx-border-color: #6fdaa4;
+    -fx-background-color: white;
+}
+.combo-box > .arrow-button > .arrow{
+    -fx-background-color: #6fdaa4;
+}
+.combo-box-popup .list-view .list-cell{
+    -fx-text-fill: #4E5F73;
+    -fx-background-color: transparent;
+}
+.combo-box-popup .list-view .list-cell:hover{
+    -fx-border-width: 3px 0px 3px 0px;
+    -fx-border-color: #6fdaa4;
+}
+.combo-box-popup .list-view .list-cell:selected{
+    -fx-background-color: #6fdaa4;
+}
+.combo-box-popup .scroll-bar .thumb{
+    -fx-background-color: #a5ffac;
+}
+.combo-box-popup .scroll-bar .thumb:pressed{
+    -fx-background-color: #6E7E8A;
+}
+.combo-box-popup .scroll-bar .track{
+    -fx-background-color: white;
+}
+.combo-box-popup .scroll-bar .increment-button ,
+.scroll-bar .decrement-button {
+    -fx-background-color: white;
+    -fx-background-radius: 0.0em;
+    -fx-padding :0.0 13.0 0.0 0.0;
+    -fx-shape : " ";
+}
+.combo-box-popup .scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow{
+    -fx-shape : " ";
+    -fx-padding :0.0em 0.0;
 }

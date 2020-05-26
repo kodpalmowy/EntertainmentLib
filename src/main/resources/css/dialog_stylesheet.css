@@ -1,0 +1,31 @@
+/*Labels*/
+.labelText{
+    -fx-text-fill: #a5ffac;
+}
+/*Dialog pane window*/
+.dialog-pane{
+    -fx-background-color: #6E7E8A;
+    -fx-border-radius: 30 30 30 30;
+    -fx-background-radius: 30 30 30 30;
+    -fx-border-width: 3px;
+    -fx-border-color: #6fdaa4;
+}
+.dialog-pane .button{
+    -fx-background-color: #6fdaa4;
+}
+.dialog-pane .button:hover{
+    -fx-background-color: derive(#6fdaa4, 30%);
+}
+.dialog-pane .button:pressed{
+    -fx-background-color: derive(#6fdaa4, 10%);
+}
+.dialog-pane .header-panel {
+    -fx-background-radius: 30 30 0 0;
+    -fx-background-color: #b2ffcc;
+}
+.dialog-pane .header-panel .label{
+    -fx-text-fill: #4E5F73;
+}
+.dialog-pane > .content.label {
+    -fx-text-fill: #a5ffac;
+}
