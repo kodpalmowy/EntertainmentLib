@@ -84,7 +84,6 @@ public class BookLibController implements Initializable {
         Slider rateSlider = bookFilterController.getRateSlider();
 
         filterList(searchField,genreComboBox,dateAfter,dateBefore,rateSlider);
-
         sortedList.comparatorProperty().bind(bookTable.comparatorProperty());
         column_SetCellValueFactory();
         bookTable.setItems(sortedList);

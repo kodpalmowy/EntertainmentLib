@@ -61,14 +61,6 @@ public class DialogUtils {
         }
     }
 
-    private FXMLLoader getLoader(String FXML_PATH) {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles.language");
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(FXML_PATH));
-        loader.setResources(resourceBundle);
-        return loader;
-    }
-
     public void showGameDialog(GameFx gameFx, BookLibController.DialogMode mode, ObservableList<GameFx> obList) {
         try {
             FXMLLoader loader = getLoader(GAME_DIALOG_FXML_PATH);
@@ -98,6 +90,14 @@ public class DialogUtils {
             System.out.println("Exception (showGameDialog) : " + ioe.getMessage());
             ioe.printStackTrace();
         }
+    }
+
+    private FXMLLoader getLoader(String FXML_PATH) {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles.language");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(FXML_PATH));
+        loader.setResources(resourceBundle);
+        return loader;
     }
 
     private void setWindowStyles(DialogPane dialogPane) {

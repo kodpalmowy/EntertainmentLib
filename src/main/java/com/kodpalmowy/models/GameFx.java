@@ -129,4 +129,19 @@ public class GameFx implements BaseFxModel{
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate.set(releaseDate);
     }
+
+    @Override
+    public String toString() {
+        return "GameFx{" +
+                "gameId=" + gameId +
+                ", title=" + title +
+                ", publisher=" + publisher +
+                ", genre=" + genre +
+                ", description=" + description +
+                ", platform=" + platform +
+                ", mode=" + mode +
+                ", rating=" + rating +
+                ", releaseDate=" + releaseDate +
+                '}';
+    }
 }

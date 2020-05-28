@@ -8,6 +8,7 @@ public class GameConverter {
     public static Game convertToGame(GameFx gameFx){
         Game game = new Game();
         game.setGameId(gameFx.getGameId());
+        game.setTitle(gameFx.getTitle());
         game.setPublisher(gameFx.getPublisher());
         game.setGenre(gameFx.getGenre());
         game.setDescription(gameFx.getDescription());
@@ -21,6 +22,7 @@ public class GameConverter {
     public static GameFx convertToGameFx(Game game){
         GameFx gameFx = new GameFx();
         gameFx.setGameId(game.getGameId());
+        gameFx.setTitle(game.getTitle());
         gameFx.setPublisher(game.getPublisher());
         gameFx.setGenre(game.getGenre());
         gameFx.setDescription(game.getDescription());

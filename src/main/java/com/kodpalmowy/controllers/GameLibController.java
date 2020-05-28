@@ -56,7 +56,7 @@ public class GameLibController implements Initializable {
     private final ObservableList<GameFx> gameFxObservableList = FXCollections.observableArrayList();
     private final DialogUtils dialogUtils = new DialogUtils();
 
-    private FilteredList<GameFx> filteredList = new FilteredList<>(gameFxObservableList);
+    private FilteredList<GameFx> filteredList = new FilteredList<>(gameFxObservableList, value -> true);
     private SortedList<GameFx> sortedList = new SortedList<>(filteredList);
 
     public GameLibController() {
@@ -90,13 +90,12 @@ public class GameLibController implements Initializable {
     private void filterList(TextField searchField, ComboBox<String> genreComboBox, ComboBox<String> platformComboBox, ComboBox<String> modeComboBox, Slider rateSlider, DatePicker dateAfter, DatePicker dateBefore) {
         filteredList.predicateProperty().bind(Bindings.createObjectBinding(() -> {
             LocalDate minDate = dateAfter.getValue();
-            LocalDate maxDate = dateAfter.getValue();
+            LocalDate maxDate = dateBefore.getValue();
 
             final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
             final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
-
-            return game -> (game.getTitle().toLowerCase().equals(searchField.getText().toLowerCase()) ||
-                    game.getDescription().toLowerCase().equals(searchField.getText().toLowerCase())) &&
+            return game -> (game.getTitle().toLowerCase().contains(searchField.getText().toLowerCase()) ||
+                    game.getDescription().toLowerCase().contains(searchField.getText().toLowerCase())) &&
                     (game.getGenre().equals(genreComboBox.getValue()) || genreComboBox.getValue() == null) &&
                     (game.getPlatform().equals(platformComboBox.getValue()) || platformComboBox.getValue() == null) &&
                     (game.getMode().equals(modeComboBox.getValue()) || modeComboBox.getValue() == null) &&

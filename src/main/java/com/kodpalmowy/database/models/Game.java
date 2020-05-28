@@ -88,4 +88,19 @@ public class Game implements BaseModel {
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "gameId=" + gameId +
+                ", title='" + title + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", genre='" + genre + '\'' +
+                ", description='" + description + '\'' +
+                ", platform='" + platform + '\'' +
+                ", mode='" + mode + '\'' +
+                ", rating=" + rating +
+                ", releaseDate=" + releaseDate +
+                '}';
+    }
 }
