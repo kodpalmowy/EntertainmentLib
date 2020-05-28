@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
 
-public class BookFx {
+public class BookFx implements BaseFxModel{
 
     private SimpleIntegerProperty bookId = new SimpleIntegerProperty();
     private SimpleStringProperty title = new SimpleStringProperty();
@@ -16,7 +16,7 @@ public class BookFx {
     private SimpleStringProperty description = new SimpleStringProperty();
     private SimpleStringProperty ISBN = new SimpleStringProperty();
     private SimpleStringProperty publisher = new SimpleStringProperty();
-    private SimpleIntegerProperty rating = new SimpleIntegerProperty();
+    private SimpleIntegerProperty rating = new SimpleIntegerProperty(1);
     private ObjectProperty<LocalDate> readDate = new SimpleObjectProperty<>();
 
     public BookFx() {

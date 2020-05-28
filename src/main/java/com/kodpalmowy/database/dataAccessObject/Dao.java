@@ -20,8 +20,16 @@ public abstract class Dao {
     }
 
     private static void createGameTable() {
-        String SQL_CREATE_GAMES_TABLE_QUERY = "CREATE TABLE gamesList (_ID INT NOT NULL AUTO_INCREMENT, title VARCHAR(100) NOT NULL, genre VARCHAR(50), description VARCHAR(300), " +
-                "publisher VARCHAR(100), rating INT(10), PRIMARY KEY (_id)";
+        String SQL_CREATE_GAMES_TABLE_QUERY = "CREATE TABLE gameList (`gameId` INT NOT NULL AUTO_INCREMENT,\n" +
+                "  `title` VARCHAR(200) NOT NULL,\n" +
+                "  `publisher` VARCHAR(200) NOT NULL,\n" +
+                "  `genre` VARCHAR(45) NOT NULL,\n" +
+                "  `description` VARCHAR(300) NOT NULL,\n" +
+                "  `platform` VARCHAR(45) NOT NULL,\n" +
+                "  `mode` VARCHAR(45) NOT NULL,\n" +
+                "  `rating` INT NOT NULL,\n" +
+                "  `releaseDate` DATETIME NOT NULL,\n" +
+                "  PRIMARY KEY (`gameId`));";
         tableUtil(SQL_CREATE_GAMES_TABLE_QUERY);
     }
 

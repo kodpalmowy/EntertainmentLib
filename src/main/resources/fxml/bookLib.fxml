@@ -55,6 +55,6 @@
       </AnchorPane>
    </center>
     <right>
-        <fx:include fx:id="filter" source="filters.fxml" />
+        <fx:include fx:id="bookFilter" source="bookFilters.fxml" />
     </right>
 </BorderPane>

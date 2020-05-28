@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
 
-public class GameFx {
+public class GameFx implements BaseFxModel{
 
     private SimpleIntegerProperty gameId = new SimpleIntegerProperty();
     private SimpleStringProperty title = new SimpleStringProperty();
@@ -16,7 +16,7 @@ public class GameFx {
     private SimpleStringProperty description = new SimpleStringProperty();
     private SimpleStringProperty platform = new SimpleStringProperty();
     private SimpleStringProperty mode = new SimpleStringProperty();
-    private SimpleIntegerProperty rating = new SimpleIntegerProperty();
+    private SimpleIntegerProperty rating = new SimpleIntegerProperty(1);
     private ObjectProperty<LocalDate> releaseDate = new SimpleObjectProperty<>();
 
     public GameFx() {
