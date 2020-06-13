@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 
 public class GameLibController implements Initializable {
 
-
     @FXML
     public TableView<GameFx> gameTable;
     @FXML

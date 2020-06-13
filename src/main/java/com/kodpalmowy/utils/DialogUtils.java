@@ -5,6 +5,7 @@ import com.kodpalmowy.controllers.BookLibController;
 import com.kodpalmowy.controllers.GameController;
 import com.kodpalmowy.models.BookFx;
 import com.kodpalmowy.models.GameFx;
+import com.kodpalmowy.models.MovieFx;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -106,7 +107,6 @@ public class DialogUtils {
         stage.initStyle(StageStyle.TRANSPARENT);
         dialogPane.getScene().setFill(Color.TRANSPARENT);
 
-
         dialogPane.setOnMousePressed(mouseEvent -> {
             xOffset = stage.getX() - mouseEvent.getScreenX();
             yOffset = stage.getY() - mouseEvent.getScreenY();
@@ -153,4 +153,6 @@ public class DialogUtils {
                 .or(gameFx.releaseDateProperty().isNull())))))));
     }
 
+    public void showMovieDialog(MovieFx movieFx, BookLibController.DialogMode mode, ObservableList<MovieFx> movieFxObservableList) {
+    }
 }

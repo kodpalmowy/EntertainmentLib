@@ -83,7 +83,7 @@ public class BookFilterController {
     }
 
     @FXML
-    public void clearAllFields() {
+    private void clearAllFields() {
         clearSearch();
         clearGenre();
         clearRate();
@@ -91,23 +91,23 @@ public class BookFilterController {
         clearDateBefore();
     }
     @FXML
-    public void clearSearch() {
+    private void clearSearch() {
         searchTextField.clear();
     }
     @FXML
-    public void clearGenre() {
+    private void clearGenre() {
         genreComboBox.setValue(null);
     }
     @FXML
-    public void clearRate() {
+    private void clearRate() {
         rateSlider.setValue(1);
     }
     @FXML
-    public void clearDateAfter() {
+    private void clearDateAfter() {
         dateAfter.setValue(null);
     }
     @FXML
-    public void clearDateBefore() {
+    private void clearDateBefore() {
         dateBefore.setValue(null);
     }
 }
