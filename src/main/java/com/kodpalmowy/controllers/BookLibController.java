@@ -4,6 +4,7 @@ import com.kodpalmowy.database.dataAccessObject.BookDao;
 import com.kodpalmowy.database.models.Book;
 import com.kodpalmowy.models.BookFx;
 import com.kodpalmowy.utils.DialogUtils;
+import com.kodpalmowy.utils.Utils;
 import com.kodpalmowy.utils.converters.BookConverter;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -50,7 +51,7 @@ public class BookLibController implements Initializable {
     @FXML
     private Button editButton;
     @FXML
-    private FilterController filterController;
+    private BookFilterController bookFilterController;
 
     private final ObservableList<BookFx> bookFxObservableList = FXCollections.observableArrayList();
     private final DialogUtils dialogUtils = new DialogUtils();
@@ -67,23 +68,22 @@ public class BookLibController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        disableButton(deleteButton, bookTable);
-        disableButton(editButton, bookTable);
+        Utils.disableButton(deleteButton, bookTable);
+        Utils.disableButton(editButton, bookTable);
 
         BookDao bookDao = new BookDao();
         List<Book> bookList = bookDao.queryBooks();
-        obListAddAll(bookList);
+        addAllToObservableList(bookList);
 
-        filterController.setBookLibController(this);
+        bookFilterController.setBookLibController(this);
 
-        TextField searchField = filterController.getSearchTextField();
-        ComboBox<String> genreComboBox = filterController.getGenreComboBox();
-        DatePicker dateAfter = filterController.getDateAfter();
-        DatePicker dateBefore = filterController.getDateBefore();
-        Slider rateSlider = filterController.getRateSlider();
+        TextField searchField = bookFilterController.getSearchTextField();
+        ComboBox<String> genreComboBox = bookFilterController.getGenreComboBox();
+        DatePicker dateAfter = bookFilterController.getDateAfter();
+        DatePicker dateBefore = bookFilterController.getDateBefore();
+        Slider rateSlider = bookFilterController.getRateSlider();
 
         filterList(searchField,genreComboBox,dateAfter,dateBefore,rateSlider);
-
         sortedList.comparatorProperty().bind(bookTable.comparatorProperty());
         column_SetCellValueFactory();
         bookTable.setItems(sortedList);
@@ -106,11 +106,7 @@ public class BookLibController implements Initializable {
                 dateAfter.valueProperty(), dateBefore.valueProperty(), searchField.textProperty(), genreBox.valueProperty(), rateSlider.valueProperty()));
     }
 
-    private void disableButton(Button button, TableView<BookFx> tableView) {
-        button.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
-    }
-
-    private void obListAddAll(List<Book> bookList) {
+    private void addAllToObservableList(List<Book> bookList) {
         bookList.forEach(book -> {
             BookFx bookFx = BookConverter.convertToBookFx(book);
             bookFxObservableList.add(bookFx);
@@ -134,18 +130,15 @@ public class BookLibController implements Initializable {
 
     public void handleEditBook(ActionEvent event) {
         BookFx bookFx = null;
-        String DIALOG_TITLE = "";
         DialogMode mode = null;
         if (event.getSource().equals(addButton)) {
             mode = DialogMode.ADD;
-            DIALOG_TITLE = "ADD BOOK";
             bookFx = new BookFx();
         } else if (event.getSource().equals(editButton)) {
             mode = DialogMode.EDIT;
-            DIALOG_TITLE = "EDIT BOOK";
             bookFx = bookTable.getSelectionModel().getSelectedItem();
         }
-        dialogUtils.showDialog(bookFx, DIALOG_TITLE, mode, bookFxObservableList);
+        dialogUtils.showBookDialog(bookFx, mode, bookFxObservableList);
     }
 
     public void handleDelete() {

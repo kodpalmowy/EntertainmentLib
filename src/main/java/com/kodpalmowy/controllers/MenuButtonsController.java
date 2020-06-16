@@ -7,7 +7,7 @@ import javafx.scene.control.ToggleGroup;
 public class MenuButtonsController {
 
     private final String BOOKS_LIB_FXML = "/fxml/bookLib.fxml";
-    private final String GAMES_LIB_FXML = "/fxml/gamesLib.fxml";
+    private final String GAMES_LIB_FXML = "/fxml/gameLib.fxml";
     private final String MOVIES_LIB_FXML = "/fxml/movieLib.fxml";
     private final String SETTINGS_LIB_FXML = "/fxml/settings.fxml";
     @FXML

@@ -31,7 +31,7 @@ public class ConnectionClass {
     private static void createTable() {
         try {
             DatabaseMetaData metaData = connection.getMetaData();
-            ResultSet tablesInDB = metaData.getTables(null, null, "bookList", null);
+            ResultSet tablesInDB = metaData.getTables(null, "ELdb", null, null);
             if (!tablesInDB.next()) {
                 Dao.createAllTables();
             }
