@@ -4,6 +4,7 @@ import com.kodpalmowy.database.dataAccessObject.MovieDao;
 import com.kodpalmowy.database.models.Movie;
 import com.kodpalmowy.models.MovieFx;
 import com.kodpalmowy.utils.DialogUtils;
+import com.kodpalmowy.utils.Utils;
 import com.kodpalmowy.utils.converters.MovieConverter;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -60,7 +61,26 @@ public class MovieLibController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Utils.disableButton(editButton, movieTable);
+        Utils.disableButton(deleteButton, movieTable);
 
+        MovieDao movieDao = new MovieDao();
+        List<Movie> movieList = movieDao.queryMovies();
+        addAllToObservableList(movieList);
+
+        movieFilterController.setMovieLibController(this);
+
+        TextField searchField = movieFilterController.getSearchTextField();
+        ComboBox<String> genreComboBox = movieFilterController.getGenreComboBox();
+        ComboBox<String> countryComboBox = movieFilterController.getCountryComboBox();
+        Slider rateSlider = movieFilterController.getRateSlider();
+        DatePicker dateAfter = movieFilterController.getDateAfter();
+        DatePicker dateBefore = movieFilterController.getDateBefore();
+
+        filterList(searchField, genreComboBox, countryComboBox, rateSlider, dateAfter, dateBefore);
+        sortedList.comparatorProperty().bind(movieTable.comparatorProperty());
+        column_SetCellValueFactory();
+        movieTable.setItems(sortedList);
     }
 
     private void filterList(TextField searchField, ComboBox<String> genreComboBox, ComboBox<String> countryComboBox, Slider rateSlider, DatePicker dateAfter, DatePicker dateBefore){
@@ -81,7 +101,7 @@ public class MovieLibController implements Initializable {
                 ));
     }
 
-    private void column_setCellValueFactory(){
+    private void column_SetCellValueFactory(){
         col_movieTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         col_movieDirector.setCellValueFactory(new PropertyValueFactory<>("director"));
         col_movieGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));

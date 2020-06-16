@@ -32,12 +32,11 @@
             <Insets left="10.0" right="10.0" top="5.0" />
          </VBox.margin>
          <children>
-            <TextField fx:id="searchTextField" maxWidth="160.0" prefWidth="160.0"
-                       stylesheets="@../css/filters_stylesheet.css" />
-            <Button fx:id="clearSearchButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0"
-                    maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#clearSearch"
-                    prefHeight="25.0" prefWidth="25.0" styleClass="clearButton" stylesheets="@../css/filters_stylesheet.css"
-                    text="X" textAlignment="CENTER">
+            <TextField fx:id="searchTextField" maxWidth="160.0" prefWidth="160.0" stylesheets="@../css/filters_stylesheet.css" />
+            <Button fx:id="clearSearchButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0" maxWidth="25.0"
+                    minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#clearSearch" prefHeight="25.0"
+                    prefWidth="25.0" styleClass="clearButton" stylesheets="@../css/filters_stylesheet.css" text="X"
+                    textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -69,10 +68,10 @@
          </VBox.margin>
          <children>
             <ComboBox fx:id="genreComboBox" prefWidth="160.0" stylesheets="@../css/filters_stylesheet.css" />
-            <Button fx:id="clearGenreButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0"
-                    maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#clearGenre"
-                    prefHeight="25.0" prefWidth="25.0" styleClass="clearButton" stylesheets="@../css/filters_stylesheet.css"
-                    text="X" textAlignment="CENTER">
+            <Button fx:id="clearGenreButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0" maxWidth="25.0"
+                    minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#clearGenre" prefHeight="25.0"
+                    prefWidth="25.0" styleClass="clearButton" stylesheets="@../css/filters_stylesheet.css" text="X"
+                    textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -81,6 +80,33 @@
                </font>
             </Button>
          </children>
+      </HBox>
+      <Label styleClass="labels" stylesheets="@../css/filters_stylesheet.css" text="%countryLabel">
+         <font>
+            <Font name="Helvetica" size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="10.0" top="5.0" />
+         </VBox.margin>
+      </Label>
+      <HBox>
+         <children>
+            <ComboBox fx:id="countryComboBox" prefWidth="160.0" stylesheets="@../css/filters_stylesheet.css" />
+            <Button fx:id="clearCountryButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0" maxWidth="25.0"
+                    minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#clearCountry" prefHeight="25.0"
+                    prefWidth="25.0" styleClass="clearButton" stylesheets="@../css/filters_stylesheet.css" text="X"
+                    textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
       </HBox>
       <Label styleClass="labels" stylesheets="@../css/filters_stylesheet.css" text="%rateLabel">
          <VBox.margin>
@@ -132,8 +158,8 @@
             <DatePicker fx:id="dateAfter" prefWidth="160.0" stylesheets="@../css/filters_stylesheet.css" />
             <Button fx:id="clearDateAfterButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0"
                     maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#clearDateAfter"
-                    prefHeight="25.0" prefWidth="25.0" styleClass="clearButton"
-                    stylesheets="@../css/filters_stylesheet.css" text="X" textAlignment="CENTER">
+                    prefHeight="25.0" prefWidth="25.0" styleClass="clearButton" stylesheets="@../css/filters_stylesheet.css"
+                    text="X" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
