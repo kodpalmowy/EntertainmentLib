@@ -3,6 +3,7 @@ package com.kodpalmowy.utils;
 import com.kodpalmowy.models.BaseFxModel;
 import com.kodpalmowy.models.BookFx;
 import com.kodpalmowy.models.GameFx;
+import com.kodpalmowy.models.MovieFx;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 
@@ -36,6 +37,16 @@ public class Utils {
         copy.descriptionProperty().setValue(copied.getDescription());
         copy.platformProperty().setValue(copied.getPlatform());
         copy.modeProperty().setValue(copied.getMode());
+        copy.ratingProperty().setValue(copied.getRating());
+        copy.releaseDateProperty().setValue(copied.getReleaseDate());
+    }
+
+    public static void copyMovieFx(MovieFx copied, MovieFx copy){
+        copy.titleProperty().setValue(copied.getTitle());
+        copy.directorProperty().setValue(copied.getDirector());
+        copy.genreProperty().setValue(copied.getGenre());
+        copy.descriptionProperty().setValue(copied.getDescription());
+        copy.countryProperty().setValue(copied.getCountry());
         copy.ratingProperty().setValue(copied.getRating());
         copy.releaseDateProperty().setValue(copied.getReleaseDate());
     }

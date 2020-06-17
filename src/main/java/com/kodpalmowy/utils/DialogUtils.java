@@ -3,6 +3,7 @@ package com.kodpalmowy.utils;
 import com.kodpalmowy.controllers.BookController;
 import com.kodpalmowy.controllers.BookLibController;
 import com.kodpalmowy.controllers.GameController;
+import com.kodpalmowy.controllers.MovieController;
 import com.kodpalmowy.models.BookFx;
 import com.kodpalmowy.models.GameFx;
 import com.kodpalmowy.models.MovieFx;
@@ -24,6 +25,7 @@ public class DialogUtils {
 
     private final BookFx temporaryBookFx = new BookFx();
     private final GameFx temporaryGameFx = new GameFx();
+    private final MovieFx temporaryMovieFx = new MovieFx();
 
     private static double xOffset = 0.0;
     private static double yOffset = 0.0;
@@ -93,6 +95,37 @@ public class DialogUtils {
         }
     }
 
+    public void showMovieDialog(MovieFx movieFx, BookLibController.DialogMode mode, ObservableList<MovieFx> obList) {
+        try {
+            FXMLLoader loader = getLoader(MOVIE_DIALOG_FXML_PATH);
+            DialogPane dialogPane = loader.load();
+            MovieController movieController = loader.getController();
+            movieController.setDefaultValues();
+
+            Utils.copyMovieFx(movieFx, temporaryMovieFx);
+            movieController.setMovie(temporaryMovieFx);
+
+            Dialog<MovieFx> dialog = new Dialog<>();
+            dialog.setDialogPane(dialogPane);
+            disableOkButton(temporaryMovieFx, dialog);
+            setWindowStyles(dialogPane);
+            dialog.setResultConverter(button -> button == ButtonType.OK ? temporaryMovieFx : null);
+            dialog.showAndWait().ifPresent(result -> {
+                Utils.copyMovieFx(result, movieFx);
+                if (mode == BookLibController.DialogMode.ADD){
+                    movieController.movieModel.saveMovieInDB(movieFx);
+                    obList.add(movieFx);
+                } else if (mode == BookLibController.DialogMode.EDIT){
+                    movieController.movieModel.updateMovieInDB(movieFx);
+                }
+            });
+
+        } catch (IOException ioe){
+            System.out.println("Exception (showMovieDialog) : " + ioe.getMessage());
+            ioe.printStackTrace();
+        }
+    }
+
     private FXMLLoader getLoader(String FXML_PATH) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles.language");
         FXMLLoader loader = new FXMLLoader();
@@ -152,7 +185,13 @@ public class DialogUtils {
                 .or(gameFx.modeProperty().isEmpty()
                 .or(gameFx.releaseDateProperty().isNull())))))));
     }
-
-    public void showMovieDialog(MovieFx movieFx, BookLibController.DialogMode mode, ObservableList<MovieFx> movieFxObservableList) {
+    private void disableOkButton(MovieFx movieFx, Dialog<MovieFx> dialog){
+        dialog.getDialogPane().lookupButton(ButtonType.OK).disableProperty()
+                .bind(movieFx.titleProperty().isEmpty()
+                .or(movieFx.directorProperty().isEmpty()
+                .or(movieFx.genreProperty().isEmpty()
+                .or(movieFx.descriptionProperty().isEmpty()
+                .or(movieFx.countryProperty().isEmpty()
+                .or(movieFx.releaseDateProperty().isNull()))))));
     }
 }
